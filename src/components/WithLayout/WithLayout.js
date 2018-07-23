@@ -1,10 +1,9 @@
 import React from 'react';
 
-import Header from '../../components/Header/Header'
+import Header from '../../components/Header/Header';
 // import Sidebar from '../../components/Sidebar/'
 // import Aside from '../../components/Aside/'
-import Footer from '../../components/Footer'
-
+import Footer from '../../components/Footer';
 
 const WithLayout = (Component) => {
     return class extends React.Component {

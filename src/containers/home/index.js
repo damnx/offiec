@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import WithLayout from '../../components/WithLayout';
-import './stype.css';
+// import './stype.css';
 
 class index extends Component {
     render() {
