@@ -1,33 +1,22 @@
 import React, { Component } from 'react';
 import WithLayoutAdmin from '../../../components/Admin/WithLayout/WithLayoutAdmin';
-
+import imageCircle from './circle.svg';
 class index extends Component {
     render() {
         return (
             <div className="content-wrapper">
-                <div className="row">
-                    <div className="col-12">
-                        <span className="d-flex align-items-center purchase-popup">
-                            <p>Like what you see? Check out our premium version for more.</p>
-                            <a href="https://github.com/BootstrapDash/PurpleAdmin-Free-Admin-Template" target="_blank" className="btn ml-auto download-button">Download Free Version</a>
-                            <a href="https://www.bootstrapdash.com/product/purple-bootstrap-4-admin-template/" target="_blank" className="btn purchase-button">Upgrade To Pro</a>
-                            <i className="mdi mdi-close popup-dismiss"></i>
-                        </span>
-                    </div>
-                </div>
-
                 <div className="page-header">
                     <h3 className="page-title">
                         <span className="page-title-icon bg-gradient-primary text-white mr-2">
                             <i className="mdi mdi-home"></i>
                         </span>
                         Dashboard
-            </h3>
+                    </h3>
                     <nav aria-label="breadcrumb">
                         <ul className="breadcrumb">
                             <li className="breadcrumb-item active" aria-current="page">
                                 <span></span>Overview
-                  <i className="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+                                <i className="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
                             </li>
                         </ul>
                     </nav>
@@ -37,9 +26,9 @@ class index extends Component {
                     <div className="col-md-4 stretch-card grid-margin">
                         <div className="card bg-gradient-danger card-img-holder text-white">
                             <div className="card-body">
-                                <img src="images/dashboard/circle.svg" className="card-img-absolute" alt="circle-image" />
+                                <img src={imageCircle} className="card-img-absolute" alt="circle-image" />
                                 <h4 className="font-weight-normal mb-3">Weekly Sales
-                    <i className="mdi mdi-chart-line mdi-24px float-right"></i>
+                                    <i className="mdi mdi-chart-line mdi-24px float-right"></i>
                                 </h4>
                                 <h2 className="mb-5">$ 15,0000</h2>
                                 <h6 className="card-text">Increased by 60%</h6>
@@ -49,9 +38,9 @@ class index extends Component {
                     <div className="col-md-4 stretch-card grid-margin">
                         <div className="card bg-gradient-info card-img-holder text-white">
                             <div className="card-body">
-                                <img src="images/dashboard/circle.svg" className="card-img-absolute" alt="circle-image" />
+                                <img src={imageCircle} className="card-img-absolute" alt="circle-image" />
                                 <h4 className="font-weight-normal mb-3">Weekly Orders
-                    <i className="mdi mdi-bookmark-outline mdi-24px float-right"></i>
+                                    <i className="mdi mdi-bookmark-outline mdi-24px float-right"></i>
                                 </h4>
                                 <h2 className="mb-5">45,6334</h2>
                                 <h6 className="card-text">Decreased by 10%</h6>
@@ -61,9 +50,9 @@ class index extends Component {
                     <div className="col-md-4 stretch-card grid-margin">
                         <div className="card bg-gradient-success card-img-holder text-white">
                             <div className="card-body">
-                                <img src="images/dashboard/circle.svg" className="card-img-absolute" alt="circle-image" />
+                                <img src={imageCircle} className="card-img-absolute" alt="circle-image" />
                                 <h4 className="font-weight-normal mb-3">Visitors Online
-                    <i className="mdi mdi-diamond mdi-24px float-right"></i>
+                                    <i className="mdi mdi-diamond mdi-24px float-right"></i>
                                 </h4>
                                 <h2 className="mb-5">95,5741</h2>
                                 <h6 className="card-text">Increased by 5%</h6>

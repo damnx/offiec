@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
+import './stype.css';
+import logo from './logo.jpg';
+import avata from './face1.jpg';
 
 class Header extends Component {
     render() {
         return (
             <div>
-                <nav className="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+                <nav className="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row flex-row-admin ">
                     <div className="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-                        <a className="navbar-brand brand-logo" href="index.html"><img src="images/logo.svg" alt="logo" /></a>
+                        <a className="navbar-brand brand-logo" href="index.html"><img src={logo} alt="logo" /></a>
                         <a className="navbar-brand brand-logo-mini" href="index.html"><img src="images/logo-mini.svg" alt="logo" /></a>
                     </div>
                     <div className="navbar-menu-wrapper d-flex align-items-stretch">
@@ -24,7 +27,7 @@ class Header extends Component {
                             <li className="nav-item nav-profile dropdown">
                                 <a className="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
                                     <div className="nav-profile-img">
-                                        <img src="images/faces/face1.jpg" alt="image" />
+                                        <img src={avata} alt="image" />
                                         <span className="availability-status online"></span>
                                     </div>
                                     <div className="nav-profile-text">

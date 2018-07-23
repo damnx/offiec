@@ -61,7 +61,7 @@ class Header extends Component {
                                     <a className="nav-link disabled" href="#">Disabled</a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link disabled" href="#"><i className="fa fa-cloud-upload" aria-hidden="true"></i></a>
+                                    <a className="nav-link disabled" href="/admin.html"><i className="fa fa-cloud-upload" aria-hidden="true"></i></a>
                                 </li>
                             </ul>
                         </div>

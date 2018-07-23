@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
+import avata from '../Header/face1.jpg';
+import './stype.css'
 
 class Sidebar extends Component {
     render() {
         return (
-            <div>
+            <div className='sidebar-damnx-fingroup'>
                 <nav className="sidebar sidebar-offcanvas" id="sidebar">
                     <ul className="nav">
                         <li className="nav-item nav-profile">
                             <a href="#" className="nav-link">
                                 <div className="nav-profile-image">
-                                    <img src="images/faces/face1.jpg" alt="profile" />
+                                    <img src={avata} alt="profile" />
                                     <span className="login-status online"></span>
                                 </div>
                                 <div className="nav-profile-text d-flex flex-column">

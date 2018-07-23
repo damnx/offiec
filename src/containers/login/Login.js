@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Loading from '../../components/Loading/Loading';
-// import './style.css';
+import './style.css';
 import Session from '../../utils/Session';
 
 class Login extends Component {
