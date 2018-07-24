@@ -64,8 +64,9 @@ class index extends Component {
         delete data['!margins'];
         delete data['!merges'];
         delete data['!ref'];
+        console.log(data)
         for (let i in data) {
-            console.log(i)
+           
         }
     }
 }
