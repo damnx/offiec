@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import avata from '../Header/face1.jpg';
-import './stype.css'
+import './style.css'
 
 class Sidebar extends Component {
     render() {

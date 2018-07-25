@@ -1,0 +1,530 @@
+body {
+    background: url('../register/images/banner.jpg') no-repeat center;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    -ms-background-size: cover;
+    background-attachment: fixed;
+   /* font-family: 'Roboto', sans-serif */
+}
+
+h1.title-agile {
+    font-size: 2.8em;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #ffffff;
+    letter-spacing: 3px;
+    word-spacing: 3px;
+    margin: 1em 1vw 1em;
+    text-align: center;
+    font-family: 'Mukta Mahee', sans-serif;
+}
+
+.main-damnx {
+    margin:3% auto 0;
+    text-align: center;
+    width: 59%;
+}
+/*-- social-icons --*/
+.social_icons-dam {
+    text-align: center;
+	    margin: 1em 0;
+}
+i.facebook{
+	/* background: url(../images/facebook.png) no-repeat 14px 12px; */
+    display: block;
+    width: 34px;
+    height: 27px;
+}
+i.twitter{
+	/* background:url(../images/twitter.png) no-repeat 7px 11px; */
+    display: block;
+    width: 34px;
+    height: 27px;
+}
+.slide-social-dam{
+    display: inline-block;
+    overflow: hidden;
+    margin: 0 10px 0px 0;
+    width: 131px;
+    height: 40px;
+      background: #2f4982;
+    cursor: pointer;
+}
+.slide-social-dam:nth-child(2){
+	    background: #089dd6;
+}
+.slide-social-dam .button{
+    position: absolute;
+    margin: 10px 0 0 47px;
+    font-size: 0.9em;
+    color: #fff;
+}
+.icon{
+    float: left;
+/*-- agileits --*/
+    padding-top:0px;
+    width: 25%;
+    height: 100%;
+    text-align: center;
+}
+.slide-dam{
+    position: relative;
+    float: left;
+    width: 75%;
+    height: 100%;
+}
+.slide-dam p{
+    position: relative;
+    top:10px;
+    margin: 0;
+    border-left: 1px solid rgba(255,255,255,0.3);
+    color:#FFF !important;
+    text-align: center;
+}
+/* Brand Colours */
+.facebook{
+    background: #3b5998;
+}
+.twitter{
+    background: #00acee;
+}
+/* Slide Animation */
+.slide-social-dam:hover .slide-dam{
+    -webkit-transform: translate(101%, 0);
+    -moz-transform: translate(101%, 0);
+    -ms-transform: translate(101%, 0);
+    -o-transform: translate(101%, 0);
+    transform: translate(101%, 0);
+}
+.no-cssanimations .slide-dam{
+    display: none; /* hide in IE 8-9 */
+}
+.touch .slide-dam{
+    display: none; /* hide on touch devices */
+}
+/* Transition */
+.slide-dam{
+    -webkit-transition: all 200ms ease-in-out;
+    -moz-transition: all 200ms ease-in-out;
+    -o-transition: all 200ms ease-in-out;
+    transition: all 200ms ease-in-out;
+}
+/* Example Media Queries */
+@media only screen and (max-width : 30em) { /* 480px/16px = 30em */
+/*-- w3layouts --*/
+    .slide-social-dam{
+        width: 100%;
+    }
+    .slide-social-dam .button{
+        position: absolute;
+        margin-left: 50%;
+    }
+}
+/*-- social-icons --*/
+/*-- /login --*/
+.login-top-dam.left{
+   float:left;
+	width:55%;
+	padding:2em;
+	background:#fff;
+}
+.login-top-dam.right {
+    width: 31.29%;
+    float: left;
+    padding: 10px 2em;
+    background: #08538c;
+}
+.login-bottom {
+        margin: 2em 0 3em 0;
+}
+.login-bottom a {
+      float: left;
+    color: #fff;
+    font-size: 0.95em;
+    line-height: 43px;
+}
+.login-bottom a:hover{
+	    color: #fff;
+    transition: .5s all;
+    -webkit-transition: .5s all;
+    -moz-transition: .5s all;
+    -o-transition: .5s all;
+    -ms-transition: .5s all;
+    text-decoration: underline;
+}
+.login-top-dam input[type="text"], .login-top-dam input[type="password"] {
+    outline: none;
+    font-size:0.9em;
+    color: #999;
+    padding: 12px 12px 12px 40px;
+    margin: 0;
+    width: 89%;
+    border:1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    -webkit-appearance: none;
+    margin-bottom: 28px;
+    font-family: 'Open Sans', sans-serif;
+}
+.login-top-dam.left input[type="submit"] {
+    font-size: 1em;
+    color: #fff;
+   background: #cb1217;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    padding: 15px 10px;
+    -webkit-appearance: none;
+    width: 100%;
+      font-weight: 400;
+    transition: .5s all;
+    -webkit-transition: .5s all;
+    -moz-transition: .5s all;
+    -o-transition: .5s all;
+    -ms-transition: .5s all;
+    text-transform: uppercase;
+	    margin-top: 1.3em;
+}
+.login-top-dam.left input[type="submit"]:hover{
+	background:#227279;
+}
+.login-bottom input[type="submit"] {
+        font-size: 0.9em;
+    color: #fff;
+    background: #cb1217;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    padding: 12px 10px;
+    -webkit-appearance: none;
+    width: 35%;
+    font-weight: 400;
+    transition: .5s all;
+    -webkit-transition: .5s all;
+    -moz-transition: .5s all;
+    -o-transition: .5s all;
+    -ms-transition: .5s all;
+    text-transform: uppercase;
+    float: right;
+}
+.login-bottom input[type="submit"]:hover{
+	background:#227279;
+}
+
+.login-top-dam input[type="text"]:focus, .login-top-dam input[type="password"]:focus{
+	
+}
+.login-top-dam input.name {
+    /* background:#fff url(../images/1.png) no-repeat 2% 51%; */
+}
+.login-top-dam input.email {
+    /* background:#fff url(../images/3.png) no-repeat 2% 51%; */
+}
+.login-top-dam input.password {
+    /* background:#fff url(../images/2.png) no-repeat 2% 51%; */
+}
+.login-top-dam input.email1 {
+    /* background:#fff url(../images/3.png) no-repeat 4% 51%; */
+}
+.login-top-dam input.password1 {
+    /* background:#fff url(../images/2.png) no-repeat 4% 51%; */
+}
+.login-top-dam input[type="text"]:hover, .login-top-dam input[type="password"]:hover{
+    border-bottom-color:rgba(132, 141, 215, 0.52);
+}
+.login-top-dam.right input[type="text"],.login-top-dam.right input[type="password"] {
+       outline: none;
+    font-size:0.9em;
+    color: #999;
+       padding: 12px 12px 12px 40px;
+    margin: 0;
+        width: 81%;
+    border: 1px solid #fff;
+    -webkit-appearance: none;
+    margin-bottom: 28px;
+    font-family: 'Open Sans', sans-serif;
+}
+.login-top-dam.right h3{
+text-align: center;
+    margin:0em 0 1em 0;
+    color: #fff;
+    font-size:1.5em;
+    font-weight: 300;
+}
+/*--checkbox--*/
+.login-top-dam input[type="checkbox"] {
+    display: none;
+}
+.login-top-dam input[type="checkbox"]+label {
+    position: relative;
+    padding-left: 2em;
+    border: none;
+    outline: none;
+       font-size: 0.95em;
+    color: #fff;
+    font-weight: 400;
+    cursor: pointer;
+}
+.login-top-dam input[type="checkbox"]+label span:first-child {
+      width: 14px;
+    height: 14px;
+    border: 2px solid #fff;
+    position: absolute;
+    left: 0;
+    top: 2px;
+}
+.login-top-dam input[type="checkbox"]:checked+label span:first-child:before {
+    content: "";
+    /* background: url(../images/tick.png)no-repeat; */
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    font-size: 10px;
+    width: 10px;
+    height: 10px;
+}
+/*--//checkbox--*/
+.copy-right {
+     text-align: center;
+      margin:3em 0 1em 0;
+}
+.copy-right p {
+	  color: #fff;
+	font-size:0.9em;
+	font-weight:400;
+}
+.copy-right p a {
+	  color:#fff;
+}
+.copy-right p a:hover {
+	text-decoration: underline;
+}
+/*--/responsive--*/
+@media (max-width:1440px){
+	.main {
+		text-align: center;
+		width: 66%;
+	}
+}
+@media (max-width:1366px){
+	.main {
+		text-align: center;
+		width: 70%;
+	}
+}
+@media (max-width:1280px){
+	.main {
+		text-align: center;
+		width: 75%;
+	}
+	body h1 {
+    font-size: 2.3em;
+	}
+}
+@media (max-width:1028px){
+	body h1 {
+    font-size: 2.3em;
+	}
+	.main {
+		text-align: center;
+		width: 94%;
+	}
+}
+@media (max-width:991px){
+	.main {
+		text-align: center;
+		width: 97%;
+	}
+	body h1 {
+		font-size: 2em;
+		margin: 1em 0 0 0;
+	}
+}
+@media (max-width:800px){
+	.login-top-dam.left {
+		float: left;
+		    width: 88%;
+		padding: 2em;
+	}
+	.login-top-dam.right {
+		    width: 88%;
+		float: left;
+		    padding: 2em 2em;
+	}
+	.main {
+		text-align: center;
+		width: 68%;
+	}
+	.login-bottom {
+		margin: 2em 0 1em 0;
+	}
+}
+@media (max-width:768px){
+	.main {
+		text-align: center;
+		width: 85%;
+	}
+	.login-top-dam.left {
+		width: 90%;
+	}
+	.login-top-dam.right {
+		width: 90%;
+	}
+	body h1 {
+		font-size: 1.8em;
+		margin: 1em 0 0 0;
+	}
+	.login-top-dam.right input[type="text"], .login-top-dam.right input[type="password"] {
+    outline: none;
+    font-size: 0.9em;
+    color: #999;
+    padding: 12px 12px 12px 40px;
+    width:90%;
+	}
+}
+@media (max-width:640px){
+	.login-top-dam.right input[type="text"], .login-top-dam.right input[type="password"] {
+		padding: 12px 12px 12px 40px;
+		width: 88%;
+	}
+	.login-top-dam input.password1 {
+		/* background: #fff url(../images/2.png) no-repeat 3% 51%; */
+	}
+	.login-top-dam input.email1 {
+		/* background: #fff url(../images/3.png) no-repeat 3% 51%; */
+	}
+}
+@media (max-width:568px){
+	.login-top-dam.left,.login-top-dam.right {
+		width: 86%;
+	}
+	.login-top-dam input[type="text"], .login-top-dam input[type="password"] {
+      width: 86%;
+	}
+	.login-top-dam.right input[type="text"], .login-top-dam.right input[type="password"] {
+		width: 86%;
+	}	
+	.copy-right p {
+		font-size: 0.85em;
+		line-height: 1.8em;
+	}
+	body h1 {
+		font-size: 1.4em;
+		margin: 1em 0 0 0;
+	}
+}
+@media (max-width:480px){
+	.login-top-dam input[type="text"], .login-top-dam input[type="password"],.login-top-dam.right input[type="text"], .login-top-dam.right input[type="password"] {
+		width: 84%;
+	}
+	.copy-right p {
+		font-size: 0.85em;
+		line-height: 1.8em;
+		padding: 0 2px;
+	}
+	.login-top-dam.left input[type="submit"] {
+		margin-top: 0.5em;
+		padding: 13px 10px;
+	}
+}
+@media (max-width:414px){
+	.main {
+		text-align: center;
+		width: 96%;
+	}
+	.login-top-dam.left, .login-top-dam.right {
+		width: 83%;
+	}
+	.copy-right {
+		margin: 1em 0 1em 0;
+	}
+	body h1 {
+		font-size: 1.4em;
+		margin: 1em 0 0 0;
+		letter-spacing: 1px;
+	}
+	.login-top-dam input.name {
+		/* background: #fff url(../images/1.png) no-repeat 4% 51%; */
+	}
+	.login-top-dam input.email {
+		/* background: #fff url(../images/3.png) no-repeat 4% 51%; */
+	}
+	.login-top-dam input.password {
+		/* background: #fff url(../images/2.png) no-repeat 4% 51%; */
+	}
+}
+@media (max-width:384px){
+	.login-top-dam.left, .login-top-dam.right {
+		width: 82%;
+	}
+	.login-top-dam input[type="text"], .login-top-dam input[type="password"], .login-top-dam.right input[type="text"], .login-top-dam.right input[type="password"] {
+		width: 81%;
+		    margin-bottom: 10px;
+	}
+}
+@media (max-width:375px){
+	.login-top-dam.left, .login-top-dam.right {
+		width: 81%;
+	}
+}
+@media (max-width:320px){
+	.login-top-dam.left, .login-top-dam.right {
+		width: 81%;
+	}
+	body h1 {
+		font-size: 1.4em;
+		margin: 1em 0 0 0;
+		letter-spacing: 0px;
+	}
+	.login-top-dam.left, .login-top-dam.right {
+		width: 89%;
+		padding: 1em;
+	}
+	.login-top-dam input[type="text"], .login-top-dam input[type="password"], .login-top-dam.right input[type="text"], .login-top-dam.right input[type="password"] {
+		width: 79%;
+		margin-bottom: 10px;
+	}
+	body h1 {
+		font-size: 1.3em;
+		margin: 0.7em 0 0 0;
+		letter-spacing: 0px;
+	}
+	.login-top-dam input.email1 {
+		/* background: #fff url(../images/3.png) no-repeat 4% 51%; */
+	}
+	.login-top-dam input.password1 {
+		/* background: #fff url(../images/2.png) no-repeat 4% 51%; */
+	}
+}
+
+@media screen and (max-width: 480px) {
+    h1.title-agile {
+        font-size: 2.3em;
+        letter-spacing: 3px;
+    }
+}
+
+@media screen and (max-width: 414px) {
+    h1.title-agile {
+        font-size: 2.2em;
+    }
+}
+
+@media screen and (max-width: 384px) {
+    h1.title-agile {
+        font-size: 2.1em;
+    }
+}
+
+@media screen and (max-width: 375px) {
+    h1.title-agile {
+        font-size: 2em;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    h1.title-agile {
+        font-size: 1.7em;
+    }
+}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './stype.css';
+import './style.css';
 import logo from './logo.jpg';
 import avata from './face1.jpg';
 
