@@ -75,7 +75,6 @@ class Header extends Component {
         let session = Session.get('session');
         if (session) {
             let user = session.user;
-            console.log(user);
             return (
                 <li className="dropdown">
                     <a className="dropdown-toggle" data-toggle="dropdown" href="#"><i className="fa fa-user" aria-hidden="true"></i> Welcome : {user.name}<span className="caret"></span></a>
@@ -92,7 +91,7 @@ class Header extends Component {
                 <a className="" href="/login.html"><i className="fa fa-sign-in" aria-hidden="true"></i> Login</a>
             </li>
             <li className="dropdown">
-                <a className="" href="#"><i className="fa fa-address-card" aria-hidden="true"></i> Sign up</a>
+                <a className="" href="/register.html"><i className="fa fa-address-card" aria-hidden="true"></i> Sign up</a>
             </li>
         </div>);
     }

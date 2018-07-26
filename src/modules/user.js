@@ -20,10 +20,9 @@ export function register(data) {
     return axios({
         method: 'post',
         url: Config.oauth_base_url + "/api/register",
-        // headers: {
-        //     'Accept': 'application/json',
-        //     "Authorization": "Bearer " + data.access_token
-        // },
+        headers: {
+            'Accept': 'application/json',
+        },
         data: data.data
     })
 }

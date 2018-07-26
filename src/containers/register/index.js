@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import './style.css';
+import { register, login } from '../../modules/user';
+import handleException from '../../utils/handleException';
 
 class index extends Component {
     constructor(props) {
@@ -241,8 +243,22 @@ class index extends Component {
     }
 
     onClick = () => {
+        handleException
         let isValid = this.isValid();
-        console.log(isValid);
+        if (isValid) {
+            
+            let data = {
+                data: this.state.inputs
+            }
+            register(data).then(res => {
+                if (res.data.status === 0) {
+
+                }
+            })
+                .catch(e => {
+                    handleException(e).next()
+                })
+        }
     }
 
     isValid = () => {
