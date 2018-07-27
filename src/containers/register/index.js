@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import './style.css';
-import { register, login } from '../../modules/user';
+import { register } from '../../modules/user';
 import handleException from '../../utils/handleException';
+import history from '../../utils/history';
+import { message } from 'antd';
 
 class index extends Component {
     constructor(props) {
@@ -17,7 +19,8 @@ class index extends Component {
                 is_active: 1,
                 gender: 1
             },
-            error: {}
+            error: {},
+            isSubmit: false
         }
     }
 
@@ -169,6 +172,7 @@ class index extends Component {
                                 className="register"
                                 value="Register"
                                 onClick={this.onClick}
+                                disabled={this.state.isSubmit}
                             />
                         </div>
                     </div>
@@ -205,8 +209,12 @@ class index extends Component {
                     error[name] = 'Sorry, please enter a valid full name'
                 break;
             case 'email':
-                if (!value || !this.checkEmail(value))
+                if (!value) {
                     error[name] = 'Sorry, please enter a valid email'
+                }
+                else if (!this.checkEmail(value)) {
+                    error[name] = 'Sorry, please enter a valid email'
+                }
                 break;
             case 'password':
                 if (!value)
@@ -221,7 +229,9 @@ class index extends Component {
                     error[name] = 'Sorry, please enter a valid address'
                 break;
             case 'phone_number':
-                if (!value || isNaN(value)) {
+                if (!value) {
+                    error[name] = 'Sorry, please enter a valid phone number'
+                } else if (isNaN(value)) {
                     error[name] = 'Sorry, please enter a valid phone number'
                 }
                 break;
@@ -245,14 +255,31 @@ class index extends Component {
     onClick = () => {
         handleException
         let isValid = this.isValid();
+        let error = this.state.error;
         if (isValid) {
-            
+            this.setState({
+                isSubmit: true
+            })
             let data = {
                 data: this.state.inputs
             }
             register(data).then(res => {
+                this.setState({
+                    isSubmit: false
+                })
                 if (res.data.status === 0) {
-
+                    history.push('/login.html');
+                    this.success();
+                }
+                else {
+                    let dataError = res.data.error;
+                    this.error();
+                    for (let i in dataError) {
+                        error[i] = dataError[i][0];
+                    }
+                    this.setState({
+                        error: error
+                    })
                 }
             })
                 .catch(e => {
@@ -260,6 +287,14 @@ class index extends Component {
                 })
         }
     }
+
+    success = () => {
+        message.success('Register success');
+    };
+
+    error = () => {
+        message.error('Register error');
+    };
 
     isValid = () => {
         let status = true;
@@ -271,7 +306,10 @@ class index extends Component {
             status = false;
         }
 
-        if (!inputs['email'] || !this.checkEmail(inputs['email'])) {
+        if (!inputs['email']) {
+            error['email'] = 'Sorry, please enter a valid full email'
+            status = false;
+        } else if (!this.checkEmail(inputs['email'])) {
             error['email'] = 'Sorry, please enter a valid full email'
             status = false;
         }
@@ -279,23 +317,20 @@ class index extends Component {
         if (!inputs['password']) {
             error['password'] = 'Sorry, please enter a valid password'
             status = false;
-        } else {
-            if (!this.checkLength(inputs['password'])) {
-                error['password'] = 'Sorry, password is greater than 5 characters'
-                status = false;
-            }
+        } else if (!this.checkLength(inputs['password'])) {
+            error['password'] = 'Sorry, password is greater than 5 characters'
+            status = false;
         }
 
         if (!inputs['conFirmPassword']) {
             error['conFirmPassword'] = 'Sorry, please enter a valid confirm password'
             status = false;
         }
-        else {
-            if (inputs['conFirmPassword'] != inputs['password']) {
-                error['conFirmPassword'] = 'Sorry, confirm password other password'
-                status = false;
-            }
+        else if (inputs['conFirmPassword'] != inputs['password']) {
+            error['conFirmPassword'] = 'Sorry, confirm password other password'
+            status = false;
         }
+
 
         if (!inputs['address']) {
             error['address'] = 'Sorry, please enter a valid address'
@@ -306,7 +341,6 @@ class index extends Component {
             error['phone_number'] = 'Sorry, please enter a valid phone number'
             status = false;
         }
-
 
         this.setState({
             error: error

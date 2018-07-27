@@ -9,9 +9,24 @@ export function login(data) {
             'grant_type': 'password',
             'client_id': Config.app_id,
             'client_secret': Config.app_secret_key,
-            'username': data.username,
+            'username': data.email,
             'password': data.password,
             'scope': '*'
+        }
+    })
+}
+
+export function me(data) {
+    return axios({
+        method: 'post',
+        url: Config.oauth_base_url + "/api/me",
+        headers: {
+            'Accept': 'application/json',
+            "Authorization": "Bearer " + data.access_token
+        },
+        data: {
+            'username': data.email,
+            'password': data.password,
         }
     })
 }
@@ -26,3 +41,5 @@ export function register(data) {
         data: data.data
     })
 }
+
+

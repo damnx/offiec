@@ -74,7 +74,7 @@ class Header extends Component {
     renderUser = () => {
         let session = Session.get('session');
         if (session) {
-            let user = session.user;
+            let user = session.user.data;
             return (
                 <li className="dropdown">
                     <a className="dropdown-toggle" data-toggle="dropdown" href="#"><i className="fa fa-user" aria-hidden="true"></i> Welcome : {user.name}<span className="caret"></span></a>
