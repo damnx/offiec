@@ -10,7 +10,7 @@ const WithLayout = (Component) => {
         render() {
             return (
                 <div>
-                    <Header session={this.props.session} />
+                    <Header {...this.props} />
                     <div className="app-body">
                         {/* <Sidebar session={this.props.session} /> */}
                         <div className="">

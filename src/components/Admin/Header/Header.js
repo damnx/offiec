@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './style.css';
 import logo from './logo.jpg';
 import avata from './face1.jpg';
+import { withRouter } from 'react-router'
 
 class Header extends Component {
     render() {
@@ -172,4 +173,4 @@ class Header extends Component {
     }
 }
 
-export default Header;
+export default withRouter(Header);

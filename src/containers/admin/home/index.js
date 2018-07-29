@@ -3,6 +3,12 @@ import WithLayoutAdmin from '../../../components/Admin/WithLayout/WithLayoutAdmi
 import imageCircle from './circle.svg';
 
 class index extends Component {
+    constructor(props) {
+        super(props)
+        
+    }
+
+
     render() {
         return (
             <div className="content-wrapper">

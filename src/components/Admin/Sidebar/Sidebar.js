@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
 import avata from '../Header/face1.jpg';
-import './style.css'
+import './style.css';
+import { Link } from "react-router-dom";
 
 class Sidebar extends Component {
+    constructor(props) {
+        super(props)
+
+    }
+
     render() {
+        console.log(this.props)
+        let path = this.props.path;
         return (
             <div className='sidebar-damnx-fingroup'>
                 <nav className="sidebar sidebar-offcanvas" id="sidebar">
@@ -21,22 +29,28 @@ class Sidebar extends Component {
                                 <i className="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
                             </a>
                         </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="index.html">
+                        <li className={path === '/admin.html' ? 'nav-item active' : 'nav-item'}>
+                            <Link className="nav-link" to="/admin.html">
                                 <span className="menu-title">Dashboard</span>
                                 <i className="mdi mdi-home menu-icon"></i>
-                            </a>
+                            </Link>
+
                         </li>
-                        <li className="nav-item">
+                        <li className="nav-item active">
                             <a className="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                                <span className="menu-title">UI Elements</span>
+                                <span className="menu-title">Email</span>
                                 <i className="menu-arrow"></i>
-                                <i className="mdi mdi-crosshairs-gps menu-icon"></i>
+                                <i className="mdi mdi-email menu-icon"></i>
                             </a>
-                            <div className="collapse" id="ui-basic">
+                            <div className="collapse show" id="ui-basic">
                                 <ul className="nav flex-column sub-menu">
-                                    <li className="nav-item"> <a className="nav-link" href="pages/ui-features/buttons.html">Buttons</a></li>
-                                    <li className="nav-item"> <a className="nav-link" href="pages/ui-features/typography.html">Typography</a></li>
+                                    <li className="nav-item">
+                                        <Link className="nav-link nav-link-damnx-email active " to="/inbox.html">Inbox</Link>
+                                        <span className='number-email badge-warning'>5</span>
+                                    </li>
+                                    <li className="nav-item"> <a className="nav-link nav-link-damnx-email" href="pages/ui-features/typography.html">Sent Mail</a></li>
+                                    <li className="nav-item"> <a className="nav-link nav-link-damnx-email" href="pages/ui-features/typography.html">Important</a></li>
+                                    <li className="nav-item"> <a className="nav-link nav-link-damnx-email" href="pages/ui-features/typography.html">Trash</a></li>
                                 </ul>
                             </div>
                         </li>

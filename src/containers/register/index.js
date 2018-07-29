@@ -4,6 +4,7 @@ import { register } from '../../modules/user';
 import handleException from '../../utils/handleException';
 import history from '../../utils/history';
 import { message } from 'antd';
+import Session from '../../utils/Session';
 
 class index extends Component {
     constructor(props) {
@@ -24,12 +25,11 @@ class index extends Component {
         }
     }
 
-    componentDidMount() {
-        // let height = document.getElementById("login-top-dam-left").offsetHeight;
-        // document.getElementById("login-top-dam-right").style.height = height + 'px';
-        // this.setState({
-        //     test: 'test'
-        // })
+    componentWillMount = () => {
+        let session = Session.get();
+        if (session){
+            history.push('/')
+        }
     }
 
     componentDidUpdate() {

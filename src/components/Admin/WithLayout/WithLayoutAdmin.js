@@ -8,12 +8,12 @@ const WithLayoutAdmin = (Component) => {
         render() {
             return (
                 <div className='container-scroller'>
-                    <Header session={this.props.session} />
+                    <Header {...this.props} />
                     <div className='container-fluid page-body-wrapper'>
-                        <Sidebar session={this.props.session} />
+                        <Sidebar {...this.props} />
                         <div className='main-panel'>
                             <Component {...this.props} />
-                            <Footer session={this.props.session} />
+                            <Footer {...this.props} />
                         </div>
                     </div>
                 </div>

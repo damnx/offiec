@@ -1,3 +1,11 @@
 .sidebar-damnx-fingroup {
     background: #ffffff;
 }
+.number-email {
+   border-radius: 4px;
+   padding: 0px 10px;
+  float: right;
+}
+.nav-link-damnx-email {
+    float: left;
+}

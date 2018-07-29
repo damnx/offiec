@@ -1,0 +1,57 @@
+#tabs-inbox{
+	/* background: #007b5e; */
+    /* color: #000; */
+    margin-bottom: .75rem;
+   
+}
+#tabs-inbox h6.section-title{
+    color: #eee;
+}
+
+#tabs-inbox .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    color: #f3f3f3;
+    background-color: transparent;
+    border-color: transparent transparent #f3f3f3;
+    border-bottom: 4px solid !important;
+    font-size: 20px;
+    font-weight: bold;
+}
+#tabs-inbox .nav-tabs .nav-link {
+    border: 1px solid transparent;
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem;
+    color: #000;
+    text-transform: capitalize;
+    font-family: "ubuntu-medium", sans-serif;
+    font-size: 1.125rem;
+    text-align: left
+}
+#table-inbox th, #table-inbox td {
+    border-top: none;
+    border-bottom: 1px solid #ebedf2;
+}
+.custom-checkbox-damnx {
+    float: left;
+}
+.mdi-text-left {
+    float: left;
+    margin-top: 5px;
+    color: red;
+    font-size: 20px
+}
+#custom-control-label-damnx {
+    margin-bottom: 0.5rem;
+}
+.mdi-reload-damnx-inbox {
+    padding: 0px 6px;
+    font-size: 20px;
+    float: left;
+}
+.mdi-reload-damnx-inbox:hover {
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;background-color: #1bcfb4 !important
+}
+.col-6-title-dam {
+    margin-left: 14px
+}
