@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
 import WithLayoutAdmin from '../../../components/Admin/WithLayout/WithLayoutAdmin';
 import './style.css';
+import { Pagination } from 'antd';
 
 class Inbox extends Component {
     constructor(props) {
         super(props)
-
+        this.state = {
+         
+        }
     }
+   
+
     render() {
         return (
             <div className="content-wrapper">
@@ -32,7 +37,7 @@ class Inbox extends Component {
                         <div className='card'>
                             <div className='card-body'>
                                 <div className='row'>
-                                    <div className='col-6 col-6-title-dam '>
+                                    <div className='col-md-6 col-6-title-dam'>
                                         <div className="custom-control custom-checkbox custom-checkbox-damnx">
                                             <input type="checkbox" className="custom-control-input" id="customCheck1" />
                                             <label id='custom-control-label-damnx' className="custom-control-label" htmlFor="customCheck1">Check All</label>
@@ -41,9 +46,10 @@ class Inbox extends Component {
                                             <i className='mdi mdi-reload mdi-reload-damnx-inbox'></i>
                                         </div>
                                     </div>
-                                    <div className='col-6'></div>
+                                    <div className='col-md-5 pagination-inbox-dam'>
+                                        <Pagination simple defaultCurrent={2} total={50} />
+                                    </div>
                                 </div>
-
                                 <table id='' className="table table-hover">
                                     {/* <thead>
                                                 <tr>
@@ -56,6 +62,16 @@ class Inbox extends Component {
                                                 </tr>
                                             </thead> */}
                                     <tbody>
+                                        <tr className='tr-table-inbox'>
+                                            <td style={{ width: '20%' }}>
+                                                <div className="custom-control custom-checkbox custom-checkbox-damnx">
+                                                    <input type="checkbox" className="custom-control-input" id="customCheck1" />
+                                                    <label id='custom-control-label-damnx' className="custom-control-label" htmlFor="customCheck1"></label>
+                                                </div>
+                                                <i className='mdi mdi-heart-outline mdi-text-left'></i>
+                                            </td>
+                                            <td style={{ width: '20%' }}> Herman Beck</td>
+                                        </tr>
                                         <tr>
                                             <td style={{ width: '20%' }}>
                                                 <div className="custom-control custom-checkbox custom-checkbox-damnx">
@@ -66,7 +82,7 @@ class Inbox extends Component {
                                             </td>
                                             <td style={{ width: '80%' }}>Herman Beck</td>
                                         </tr>
-                                        <tr>
+                                        <tr className='tr-table-inbox'>
                                             <td style={{ width: '20%' }}>
                                                 <div className="custom-control custom-checkbox custom-checkbox-damnx">
                                                     <input type="checkbox" className="custom-control-input" id="customCheck1" />
@@ -76,7 +92,7 @@ class Inbox extends Component {
                                             </td>
                                             <td> Herman Beck</td>
                                         </tr>
-                                        <tr>
+                                        <tr className='tr-table-inbox'>
                                             <td style={{ width: '20%' }}>
                                                 <div className="custom-control custom-checkbox custom-checkbox-damnx">
                                                     <input type="checkbox" className="custom-control-input" id="customCheck1" />
@@ -89,7 +105,6 @@ class Inbox extends Component {
                                     </tbody>
                                 </table>
                             </div>
-
                         </div>
                     </div>
                 </div>
