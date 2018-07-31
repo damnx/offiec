@@ -55,9 +55,9 @@ class Sidebar extends Component {
                             </div>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="pages/icons/mdi.html">
-                                <span className="menu-title">Icons</span>
-                                <i className="mdi mdi-contacts menu-icon"></i>
+                            <a className="nav-link" href="/upload-file.html">
+                                <span className="menu-title">Upload File Timekeeping</span>
+                                <i className="mdi mdi-file-excel-box menu-icon"></i>
                             </a>
                         </li>
                         <li className="nav-item">

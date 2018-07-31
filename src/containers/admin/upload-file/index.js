@@ -12,7 +12,7 @@ class index extends Component {
                         <span className="page-title-icon bg-gradient-primary text-white mr-2">
                             <i className="fa fa-file-excel-o" aria-hidden="true"></i>
                         </span>
-                        Upload Timekeeping File
+                        Upload File Timekeeping
                     </h3>
                     <nav aria-label="breadcrumb">
                         <ul className="breadcrumb">
@@ -23,21 +23,26 @@ class index extends Component {
                         </ul>
                     </nav>
                 </div>
-                <div className='col-12 grid-margin stretch-card'>
-                    <div className='card'>
-                        <div className='card-body'>
-                            <h4 className="card-title">Basic form elements</h4>
-                            <div className="md-form">
-                                <div className="file-field">
-                                    <div className="btn btn-rounded purple-gradient btn-sm float-left">
-                                        <span>Choose file</span>
-                                        <input onChange={(e) => this.onChange(e.target.files)} type="file" />
+                <div className='row'>
+                    <div className='col-12 grid-margin'>
+                        <div className='card'>
+                            <div className='card-body'>
+                                <div className='App'>
+                                    <h2>Upload File</h2>
+                                    <div className="md-form">
+                                        <div className="file-field">
+                                            <div className='form-group form-group-upload-file-timekeeping'>
+                                                <input onChange={(e) => this.onChange(e.target.files)} type="file" name="file" id="file" className="inputfile" />
+                                                <label className='btn btn-gradient-danger btn-icon-text' htmlFor="file"><i className='mdi mdi-upload btn-icon-prepend'></i> Choose a file </label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
         );
     }
@@ -60,13 +65,12 @@ class index extends Component {
     }
 
     formatDataImport = (workbook) => {
-        let data = workbook.Sheets.Sheet;
-        delete data['!margins'];
-        delete data['!merges'];
-        delete data['!ref'];
-        console.log(data)
+        let sheetNames = workbook.SheetNames[0];
+        let data = workbook.Sheets[sheetNames];
+        data = XLSX.utils.sheet_to_json(data, { header: 1 });
+        console.log(data);
         for (let i in data) {
-           
+
         }
     }
 }
