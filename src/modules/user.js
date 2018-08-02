@@ -42,4 +42,15 @@ export function register(data) {
     })
 }
 
+export function getListUser(data) {
+    return axios({
+        method: 'get',
+        url: Config.oauth_base_url + "/api/get-list-users",
+        headers: {
+            'Accept': 'application/json',
+            "Authorization": "Bearer " + data.access_token
+        }
+    })
+}
+
 

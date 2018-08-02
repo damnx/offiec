@@ -103,7 +103,6 @@ class SentMail extends Component {
     };
 
     handleChange = (value) => {
-        console.log(`selected ${value}`);
     }
 }
 

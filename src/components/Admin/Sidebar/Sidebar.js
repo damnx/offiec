@@ -10,7 +10,6 @@ class Sidebar extends Component {
     }
 
     render() {
-        console.log(this.props)
         let path = this.props.path;
         return (
             <div className='sidebar-damnx-fingroup'>

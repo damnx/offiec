@@ -13040,6 +13040,7 @@ input[type="button"].btn-block {
   white-space: nowrap;
   vertical-align: baseline;
   border-radius: 0.25rem;
+  margin-right: 5px
 }
 
 .badge:empty {

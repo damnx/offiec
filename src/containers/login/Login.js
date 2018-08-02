@@ -193,7 +193,7 @@ class Login extends Component {
                     ...self.state.inputs,
                     access_token: token.access_token
                 }
-                
+
                 me(data).then(newUser => {
                     sessionStorage.setItem("logged", true);
                     let newSession = {
