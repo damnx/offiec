@@ -20944,3 +20944,20 @@ dl li {
 
 /*# sourceMappingURL=maps/style.css.map */
 
+.error-span {
+  color: red;
+}
+.error-label{
+  color: red;
+  padding: 5px 0px;
+}
+.error-input {
+  border-color: red !important
+}
+.error-input .ant-select-selection {
+  border-color: red
+}
+.error-input .ant-calendar-picker-input {
+  border-color: red
+}
+
