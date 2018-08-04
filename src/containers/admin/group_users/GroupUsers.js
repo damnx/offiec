@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import './style.css';
 import WithLayoutAdmin from '../../../components/Admin/WithLayout/WithLayoutAdmin';
-import { Input, Select, Pagination, Spin, Anchor } from 'antd';
+import { Input, Select, Spin, message } from 'antd';
 import Session from '../../../utils/Session';
 import handleException from '../../../utils/handleException';
 import { createGroupUsers, getListGroupUsers } from '../../../modules/groupusers';
 import * as CONST from '../../../config/constant';
+import ButtomUpdateGroupUsers from './components/buttom-update-group-users/ButtomUpdateGroupUsers';
+import ListGroupUser from './components/list-group-users/ListGroupUser'
 
 const Option = Select.Option;
-const { Link } = Anchor;
+
 
 
 class GroupUsers extends Component {
@@ -23,7 +25,8 @@ class GroupUsers extends Component {
             page: 1,
             total: 0,
             current_page: 0,
-            isLoading: false
+            isLoading: false,
+            isUpdate: false
         }
     }
 
@@ -39,7 +42,7 @@ class GroupUsers extends Component {
                     <div className="page-header">
                         <h3 className="page-title">
                             <span className="page-title-icon bg-gradient-primary text-white mr-2">
-                                <i className="fa fa-file-excel-o" aria-hidden="true"></i>
+                                <i className="mdi mdi-account-multiple-plus" aria-hidden="true"></i>
                             </span>
                             Group Users
                 </h3>
@@ -47,7 +50,8 @@ class GroupUsers extends Component {
                             <ul className="breadcrumb">
                                 <li className="breadcrumb-item active" aria-current="page">
                                     <span></span>Overview
-                            <i className="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+                                    <i className="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+
                                 </li>
                             </ul>
                         </nav>
@@ -57,7 +61,8 @@ class GroupUsers extends Component {
                             <div className='card'>
                                 <div className='card-body'>
                                     <div className='App'>
-                                        <h4 className="card-title">Add Group Users</h4>
+                                        <h4 className="card-title">{this.state.isUpdate ? 'Update ' : 'Add '} Group Users</h4>
+                                        <p className="card-description"> Click <code className='code-create' onClick={this.onClickCreate}><i className='mdi mdi-account-multiple-plus'></i> Create Group Users Now !</code></p>
                                         <div className="md-form">
                                             <div className="file-field">
                                                 <div className='form-group'>
@@ -85,96 +90,92 @@ class GroupUsers extends Component {
                                                         <Option value="pending">Pending</Option>
                                                     </Select>
                                                 </div>
-                                                <div className="form-group">
-                                                    <button
-                                                        type="submit"
-                                                        onClick={this.submit}
-                                                        className="btn btn-gradient-primary mr-2"
-                                                        disabled={this.state.isSubmit}
-                                                    >
-                                                        Submit
-                                        </button>
+                                                {this.state.isUpdate &&
+                                                    <ButtomUpdateGroupUsers
+                                                        data={this.state.dataGroupUsers[this.state.isUpdate]}
+                                                        onChangeUpdate={this.onChangeUpdate}
+                                                        status={this.state.status}
+                                                        isSubmit={this.state.isLoading}
+                                                        error={this.state.error}
+                                                        name={this.state.name}
+                                                    />
+                                                }
+                                                {!this.state.isUpdate &&
+                                                    <div className="form-group">
+                                                        <button
+                                                            type="submit"
+                                                            onClick={this.submit}
+                                                            className="btn btn-gradient-primary mr-2"
+                                                            disabled={this.state.isSubmit}
+                                                        >
+                                                            Submit
+                                                   </button>
 
-                                                    <button
-                                                        className="btn btn-light"
-                                                        onClick={this.cancel}
-                                                    >
-                                                        Cancel
-                                        </button>
-                                                </div>
+                                                        <button
+                                                            className="btn btn-light"
+                                                            onClick={this.cancel}
+                                                        >
+                                                            Cancel
+                                                   </button>
+                                                    </div>
+                                                }
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div className='col-12 grid-margin'>
-                            <div className='card'>
-                                <div className="card-body">
-                                    <h4 className="card-title">List Group Users</h4>
-                                    <div className='form-group'>
-                                        <table className="table table-hover">
-                                            <thead>
-                                                <tr>
-                                                    <th>Name Group</th>
-                                                    <th>Number of Member</th>
-                                                    <th>Status</th>
-                                                    <th className='text-right'>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {this.renderGroupUser()}
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div className='form-group text-right'>
-                                        <Pagination
-                                            size="small"
-                                            pageSize={CONST.PAGE_SIZE}
-                                            onChange={this.onChangePaginate}
-                                            total={this.state.total}
-                                            current={this.state.current_page}
-                                            showQuickJumper
-                                        />
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <ListGroupUser
+                            dataGroupUsers={this.state.dataGroupUsers}
+                            total={this.state.total}
+                            current_page={this.state.current_page}
+                            onChange={this.onChangePaginate}
+                            onClickUpdate={this.onClickUpdate}
+                            onClickDelete={this.onClickDelete}
+                        />
                     </div>
                 </Spin>
             </div>
         );
     }
 
-    renderGroupUser = () => {
-        let data = this.state.dataGroupUsers;
-        let result = []
-        for (let i in data) {
-            result.push(<tr key={i}>
-                <td>{data[i].name}</td>
-                <td className="text-danger"> {data[i].user_count} <i className="mdi mdi-account-check"></i></td>
-                <td><label className={CONST.ENUM_GROUP_USERS_STATUS[data[i].status].className + ' badge'}>{CONST.ENUM_GROUP_USERS_STATUS[data[i].status].value}</label></td>
-                <td className='text-right'>
-                    <a
-                        href="#Edit-Group-User"
-                        className="btn btn-gradient-primary btn-icon-text btn-sm mr-2"
-                    >
-                        Edit
-                          <i className="mdi mdi-file-check btn-icon-append"></i>
-                    </a>
-
-                    <a
-                        type="button"
-                        className="btn btn-gradient-danger btn-lg btn-sm"
-                    >
-                        btn-lg
-                        <i className="mdi mdi-delete-forever"></i>
-                    </a>
-                </td>
-            </tr >)
+    onChangeUpdate = (isLoading, data = null, error = null) => {
+        let dataGroupUsers = this.state.dataGroupUsers;
+        let isUpdate = this.state.isUpdate;
+        let errorStat = this.state.error;
+        if (data) {
+            dataGroupUsers[isUpdate] == data
         }
-        return result;
+        if (error) {
+            errorStat = error;
+        }
+        this.setState({
+            isLoading: isLoading,
+            dataGroupUsers: dataGroupUsers,
+            error: errorStat
+        })
+    }
+
+    onClickUpdate = (isKey) => {
+        let data = this.state.dataGroupUsers[isKey];
+        this.setState({
+            isUpdate: isKey,
+            name: data.name,
+            status: data.status,
+            error: {},
+            isSubmit: false,
+        })
+    }
+
+    onClickCreate = () => {
+        this.setState({
+            name: undefined,
+            status: 'public',
+            error: {},
+            isSubmit: false,
+            isLoading: false,
+            isUpdate: undefined
+        })
     }
 
     apiGetListGroupUsers = (page) => {
@@ -219,30 +220,34 @@ class GroupUsers extends Component {
 
         createGroupUsers(data).then(res => {
 
-
             this.setState({
-                isSubmit: true
+                isSubmit: true,
+                isLoading: true
             })
 
             let data = res.data;
             let error = this.state.error;
             let dataGroupUsers = this.state.dataGroupUsers;
+            this.error()
             if (data.status === 1) {
                 for (let i in data.error) {
                     error[i] = data.error[i]
                 }
                 this.setState({
                     error: error,
-                    isSubmit: false
+                    isSubmit: false,
+                    isLoading: false
                 })
             } else {
                 let data = res.data.data;
-                dataGroupUsers[res.data.data.id] = data;
-                dataGroupUsers[res.data.data.id]['user_count'] = 0
+                dataGroupUsers["G-id-" + res.data.data.id] = data;
+                dataGroupUsers["G-id-" + res.data.data.id]['user_count'] = 0
+                this.success()
                 this.setState({
                     dataGroupUsers: dataGroupUsers,
                     isSubmit: false,
-                    total: this.state.total + 1
+                    total: this.state.total + 1,
+                    isLoading: false
                 })
             }
         }).catch(e => {
@@ -253,7 +258,13 @@ class GroupUsers extends Component {
         })
     }
 
+    success = () => {
+        message.success('Create Group Users success');
+    };
 
+    error = () => {
+        message.error('Create Group Users error');
+    };
 
     cancel = () => {
         this.setState({
@@ -311,7 +322,7 @@ class GroupUsers extends Component {
     convertDateArraytoObject = (data) => {
         let result = {};
         for (let i = 0; i < data.length; i++) {
-            result['G-id-'+(data[i].id)] = data[i];
+            result['G-id-' + (data[i].id)] = data[i];
         }
         return result
     }

@@ -23,3 +23,15 @@ export function getListGroupUsers(data) {
         }
     })
 }
+
+export function editGroupUsers(data) {
+    return axios({
+        method: 'put',
+        url: Config.oauth_base_url + "/api/update-group-users/" + data.id,
+        headers: {
+            'Accept': 'application/json',
+            "Authorization": "Bearer " + data.access_token
+        },
+        data: data.data
+    })
+}
