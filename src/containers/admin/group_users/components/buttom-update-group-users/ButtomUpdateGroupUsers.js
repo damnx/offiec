@@ -28,6 +28,10 @@ class ButtomUpdateGroupUsers extends Component {
     onClickUpdate = () => {
         let access_token = Session.get().token.access_token;
         let dataNew = this.props.data;
+        if(!dataNew){
+           this.error();
+            return
+        }
         let data = {
             'access_token': access_token,
             'id': dataNew.id,
@@ -65,7 +69,6 @@ class ButtomUpdateGroupUsers extends Component {
     error = () => {
         message.error('Update Group users error');
     };
-
 }
 
 export default ButtomUpdateGroupUsers;

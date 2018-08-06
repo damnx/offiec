@@ -10,7 +10,7 @@ import UploadFile from '../admin/upload-file/index';
 import Inbox from '../admin/inbox/Inbox';
 import SentMail from '../admin/sent-mail/SentMail';
 
-import Rules from '../admin/rules/Rules';
+import SaturdayFulls from '../admin/date-saturday-fulls/DateSaturdayFulls';
 import GroupUsers from '../admin/group_users/GroupUsers';
 
 
@@ -29,7 +29,7 @@ class index extends Component {
                 <PrivateRoute exact path="/sent-mail.html" name="Sent Mail" component={SentMail} />
                 <PrivateRoute exact path="/inbox.html" name="Upload File" component={Inbox} />
                 <PrivateRoute exact path="/upload-file.html" name="Upload File" component={UploadFile} />
-                <PrivateRoute exact path="/rules-date-users.html" name="Rules Users" component={Rules} />
+                <PrivateRoute exact path="/date-saturday_fulls.html" name="Date Saturday Fulls" component={SaturdayFulls} />
                 <Route exact path="/" component={Home} />
                 <Redirect from="/" to="/" />
             </Switch>

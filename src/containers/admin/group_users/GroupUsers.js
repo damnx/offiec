@@ -4,7 +4,7 @@ import WithLayoutAdmin from '../../../components/Admin/WithLayout/WithLayoutAdmi
 import { Input, Select, Spin, message } from 'antd';
 import Session from '../../../utils/Session';
 import handleException from '../../../utils/handleException';
-import { createGroupUsers, getListGroupUsers } from '../../../modules/groupusers';
+import { createGroupUsers, getListGroupUsersPaginate } from '../../../modules/groupusers';
 import * as CONST from '../../../config/constant';
 import ButtomUpdateGroupUsers from './components/buttom-update-group-users/ButtomUpdateGroupUsers';
 import ListGroupUser from './components/list-group-users/ListGroupUser'
@@ -106,7 +106,6 @@ class GroupUsers extends Component {
                                                             type="submit"
                                                             onClick={this.submit}
                                                             className="btn btn-gradient-primary mr-2"
-                                                            disabled={this.state.isSubmit}
                                                         >
                                                             Submit
                                                    </button>
@@ -132,27 +131,32 @@ class GroupUsers extends Component {
                             onChange={this.onChangePaginate}
                             onClickUpdate={this.onClickUpdate}
                             onClickDelete={this.onClickDelete}
+                            isLoading={this.state.isLoading}
+                            page={this.state.page}
                         />
                     </div>
                 </Spin>
             </div>
         );
     }
+    onClickDelete = (isKey) => {
+        if (isKey) {
+            this.apiGetListGroupUsers(1)
+        }
+    }
 
     onChangeUpdate = (isLoading, data = null, error = null) => {
-        let dataGroupUsers = this.state.dataGroupUsers;
-        let isUpdate = this.state.isUpdate;
         let errorStat = this.state.error;
-        if (data) {
-            dataGroupUsers[isUpdate] == data
-        }
         if (error) {
             errorStat = error;
         }
         this.setState({
             isLoading: isLoading,
-            dataGroupUsers: dataGroupUsers,
             error: errorStat
+        }, () => {
+            if (data) {
+                this.apiGetListGroupUsers(this.state.page)
+            }
         })
     }
 
@@ -189,11 +193,11 @@ class GroupUsers extends Component {
             'page': page
         }
 
-        getListGroupUsers(data).then(res => {
+        getListGroupUsersPaginate(data).then(res => {
             let data = res.data.data;
             this.setState({
                 isLoading: false,
-                dataGroupUsers: this.convertDateArraytoObject(data.data),
+                dataGroupUsers: this.convertDataArraytoObject(data.data),
                 total: data.total,
                 current_page: data.current_page
             })
@@ -203,8 +207,13 @@ class GroupUsers extends Component {
         })
     }
 
-    onChangePaginate = (page, pageSize) => {
-        this.apiGetListGroupUsers(page)
+    onChangePaginate = (page) => {
+        this.setState({
+            ...this.state,
+            page: page
+        }, () => {
+            this.apiGetListGroupUsers(page)
+        })
     }
 
     submit = () => {
@@ -219,17 +228,15 @@ class GroupUsers extends Component {
         }
 
         createGroupUsers(data).then(res => {
-
             this.setState({
                 isSubmit: true,
                 isLoading: true
             })
-
             let data = res.data;
             let error = this.state.error;
             let dataGroupUsers = this.state.dataGroupUsers;
-            this.error()
             if (data.status === 1) {
+                this.error()
                 for (let i in data.error) {
                     error[i] = data.error[i]
                 }
@@ -251,20 +258,17 @@ class GroupUsers extends Component {
                 })
             }
         }).catch(e => {
-            this.setState({
-                isSubmit: false
-            })
             handleException(e).next();
         })
     }
 
     success = () => {
-        message.success('Create Group Users success');
-    };
+        message.success('Create Group Users Success');
+    }
 
     error = () => {
-        message.error('Create Group Users error');
-    };
+        message.error('Create Group Users Error');
+    }
 
     cancel = () => {
         this.setState({
@@ -319,7 +323,7 @@ class GroupUsers extends Component {
         return status;
     }
 
-    convertDateArraytoObject = (data) => {
+    convertDataArraytoObject = (data) => {
         let result = {};
         for (let i = 0; i < data.length; i++) {
             result['G-id-' + (data[i].id)] = data[i];

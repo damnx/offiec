@@ -13,10 +13,21 @@ export function createGroupUsers(data) {
     })
 }
 
+export function getListGroupUsersPaginate(data) {
+    return axios({
+        method: 'get',
+        url: Config.oauth_base_url + "/api/get-all-group-users-paginate?page_size=" + data.page_size + "&page=" + data.page,
+        headers: {
+            'Accept': 'application/json',
+            "Authorization": "Bearer " + data.access_token
+        }
+    })
+}
+
 export function getListGroupUsers(data) {
     return axios({
         method: 'get',
-        url: Config.oauth_base_url + "/api/get-all-group-users?page_size=" + data.page_size + "&page=" + data.page,
+        url: Config.oauth_base_url + "/api/get-all-group-users",
         headers: {
             'Accept': 'application/json',
             "Authorization": "Bearer " + data.access_token
@@ -33,5 +44,17 @@ export function editGroupUsers(data) {
             "Authorization": "Bearer " + data.access_token
         },
         data: data.data
+    })
+}
+
+
+export function destroyGroupUsers(data) {
+    return axios({
+        method: 'delete',
+        url: Config.oauth_base_url + "/api/delete-group-users/" + data.id,
+        headers: {
+            'Accept': 'application/json',
+            "Authorization": "Bearer " + data.access_token
+        }
     })
 }

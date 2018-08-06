@@ -7,28 +7,28 @@ import moment from 'moment';
 import { getListUser } from '../../../modules/user';
 import Session from '../../../utils/Session';
 import handleException from '../../../utils/handleException';
+import { getListGroupUsers } from '../../../modules/groupusers';
 
 const { TextArea } = Input;
 const Option = Select.Option;
 
-class Rules extends Component {
+class DateSaturdayFulls extends Component {
     constructor(props) {
         super(props)
         this.state = {
             date: [],
-            name: undefined,
             valueDate: undefined,
-            description: undefined,
             error: {},
             isSubmit: false,
             isLoading: true,
-            dataUser: [],
-            userId: []
+            dataGroupUsers: [],
+            GroupUsersId: []
+
         }
     }
 
     componentDidMount() {
-        this.callApiListUser()
+        this.callApiGetListGroupUsers()
     }
 
 
@@ -43,7 +43,7 @@ class Rules extends Component {
                             <span className="page-title-icon bg-gradient-primary text-white mr-2">
                                 <i className="mdi mdi-email"></i>
                             </span>
-                            Sent Mail
+                            Working Whole Saturday
                     </h3>
                         <nav aria-label="breadcrumb">
                             <ul className="breadcrumb">
@@ -56,65 +56,34 @@ class Rules extends Component {
                     </div>
 
                     <div className="row ">
-                        <div className="col-6 grid-margin stretch-card">
+                        <div className="col-12 grid-margin stretch-card">
                             <div className="card">
                                 <div className="card-body">
+                                    <h4 className="card-title">Working whole saturday</h4>
+                                    <p className="card-description"> Click <code className="code-create"><i className="mdi mdi-account-multiple-plus"></i> Create Now !</code></p>
                                     <div className="forms-sample">
                                         <div className="form-group">
-                                            <label >Name <span className='error-span'>*</span></label>
-                                            <Input
-                                                placeholder="Name"
-                                                size='large'
-                                                value={this.state.name}
-                                                onChange={(e) => this.onChange('name', e.target.value)}
-                                                onBlur={(e) => this.onBlur('name', e.target.value)}
-                                                onFocus={(e) => this.onFocus('name', e.target.value)}
-                                                className={error && error['name'] ? 'error-input' : ''}
-                                            />
-                                            {error && error['name'] ? <label className='error-label' >Sorry, please enter a valid name ? <span className='error-span'>*</span></label> : ''}
-                                        </div>
-
-                                        <div className="form-group">
-                                            <label >Username <span className='error-span'>*</span></label>
+                                            <label >Group Users <span className='error-span'>*</span></label>
                                             <Select
                                                 mode="multiple"
                                                 size='large'
-                                                placeholder="Username"
+                                                placeholder="Group Users"
                                                 // defaultValue={['a10', 'c12']}
                                                 style={{ width: '100%' }}
                                                 maxTagCount={1}
                                                 showSearch
                                                 optionFilterProp="label"
-                                                onChange={(value) => this.onChangeUsername('userId', value)}
-                                                onBlur={(value) => this.onBlurUsername('userId', value)}
-                                                onFocus={(value) => this.onFocusUsername('userId', value)}
-                                                value={this.state.userId}
-                                                className={error && error['userId'] ? 'error-input' : ''}
+                                                onChange={(value) => this.onChangeUsername('GroupUsersId', value)}
+                                                onBlur={(value) => this.onBlurUsername('GroupUsersId', value)}
+                                                onFocus={(value) => this.onFocusUsername('GroupUsersId', value)}
+                                                value={this.state.GroupUsersId}
+                                                className={error && error['GroupUsersId'] ? 'error-input' : ''}
                                             >
-                                                {this.renderSelectUsers()}
+                                                {this.renderSelectGroupUsers()}
                                             </Select>
-                                            {error && error['userId'] ? <label className='error-label' >Sorry, please enter a valid Username ? <span className='error-span'>*</span></label> : ''}
+                                            {error && error['GroupUsersId'] ? <label className='error-label' >Sorry, please enter a valid Username ? <span className='error-span'>*</span></label> : ''}
                                         </div>
-                                        <div className="form-group">
-                                            <label >Description</label>
-                                            <TextArea
-                                                placeholder="Description"
-                                                autosize={{ minRows: 2, maxRows: 6 }}
-                                                value={this.state.description}
-                                                onChange={(e) => this.onChange('description', e.target.value)}
-                                                onBlur={(e) => this.onBlur('description', e.target.value)}
-                                                onFocus={(e) => this.onFocus('description', e.target.value)}
-                                            />
 
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-6 grid-margin stretch-card">
-                            <div className="card">
-                                <div className="card-body">
-                                    <div className="forms-sample">
                                         <div className="form-group">
                                             <label>Date rules <span className='error-span'>*</span></label>
                                             <DatePicker
@@ -148,6 +117,7 @@ class Rules extends Component {
                                                 Cancel
                                         </button>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -163,10 +133,19 @@ class Rules extends Component {
         let inputs = {
             date: this.state.date,
             name: this.state.name,
-            description: this.state.description,
-            userId: this.state.userId
+            GroupUsersId: this.state.GroupUsersId
         }
-        console.log(inputs);
+        this.convertData();
+    }
+
+    convertData = () => {
+        let GroupUsersId = this.state.GroupUsersId;
+        let date = this.state.date;
+        let data = [];
+        for (let i = 0; i < GroupUsersId.length; i++) {
+            data.push({ id_group_users: GroupUsersId[i], date_saturday_fulls: JSON.stringify(date) })
+        }
+        console.log(data);
     }
 
     cancel = () => {
@@ -174,12 +153,11 @@ class Rules extends Component {
             date: [],
             name: undefined,
             valueDate: undefined,
-            description: undefined,
             error: {},
             isSubmit: false,
             isLoading: false,
-            dataUser: [],
-            userId: []
+            dataGroupUsers: [],
+            GroupUsersId: []
         })
     }
 
@@ -194,11 +172,11 @@ class Rules extends Component {
         return result;
     }
 
-    renderSelectUsers = () => {
-        let dataUser = this.state.dataUser;
+    renderSelectGroupUsers = () => {
+        let dataGroupUsers = this.state.dataGroupUsers;
         let children = [];
-        for (let i = 0; i < dataUser.length; i++) {
-            children.push(<Option key={i} label={dataUser[i].name} value={dataUser[i].id}>{dataUser[i].name}</Option>);
+        for (let i = 0; i < dataGroupUsers.length; i++) {
+            children.push(<Option key={i} label={dataGroupUsers[i].name + " - " + dataGroupUsers[i].user_count + " user"} value={dataGroupUsers[i].id}>{dataGroupUsers[i].name + " - " + dataGroupUsers[i].user_count + " user"}</Option>);
         }
         return children;
     }
@@ -295,17 +273,20 @@ class Rules extends Component {
         })
     }
 
-    callApiListUser = () => {
+
+    callApiGetListGroupUsers = () => {
         let access_token = Session.get().token.access_token;
         let data = {
             access_token: access_token
         }
-        getListUser(data).then(res => {
+
+        getListGroupUsers(data).then(res => {
             this.setState({
                 isLoading: false,
-                dataUser: res.data.data,
+                dataGroupUsers: res.data.data,
             });
         }).catch(e => {
+            return;
             handleException(e).next();
         })
     }
@@ -314,18 +295,8 @@ class Rules extends Component {
         let state = this.state;
         let status = true;
         let error = this.state.error;
-        if (state['userId'].length <= 0) {
-            error['userId'] = 'error';
-            status = false;
-        }
-
         if (state['date'].length <= 0) {
             error['date'] = 'error';
-            status = false;
-        }
-
-        if (state['name'] === '' || state['name'] === undefined) {
-            error['name'] = 'error';
             status = false;
         }
 
@@ -339,4 +310,4 @@ class Rules extends Component {
 
 }
 
-export default WithLayoutAdmin(Rules);
+export default WithLayoutAdmin(DateSaturdayFulls);

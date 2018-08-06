@@ -13040,7 +13040,8 @@ input[type="button"].btn-block {
   white-space: nowrap;
   vertical-align: baseline;
   border-radius: 0.25rem;
-  margin-right: 5px
+  margin-right: 5px;
+  margin-bottom: 5px;
 }
 
 .badge:empty {
@@ -20959,5 +20960,8 @@ dl li {
 }
 .error-input .ant-calendar-picker-input {
   border-color: red
+}
+.ant-message{
+  top: 75px !important;
 }
 
