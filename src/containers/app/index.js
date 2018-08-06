@@ -29,7 +29,7 @@ class index extends Component {
                 <PrivateRoute exact path="/sent-mail.html" name="Sent Mail" component={SentMail} />
                 <PrivateRoute exact path="/inbox.html" name="Upload File" component={Inbox} />
                 <PrivateRoute exact path="/upload-file.html" name="Upload File" component={UploadFile} />
-                <PrivateRoute exact path="/date-saturday_fulls.html" name="Date Saturday Fulls" component={SaturdayFulls} />
+                <PrivateRoute exact path="/date-saturday-fulls.html" name="Date Saturday Fulls" component={SaturdayFulls} />
                 <Route exact path="/" component={Home} />
                 <Redirect from="/" to="/" />
             </Switch>
