@@ -3,6 +3,7 @@ import WithLayoutAdmin from '../../../components/Admin/WithLayout/WithLayoutAdmi
 import './style.css';
 import { Spin, message } from 'antd';
 import AddDateSaturdayFulls from '../date-saturday-fulls/components/AddDateSaturdayFulls';
+import ListDateSaturdayFull from '../date-saturday-fulls/components/ListDateSaturdayFull';
 import Session from '../../../utils/Session';
 import handleException from '../../../utils/handleException';
 import { getListGroupUsers } from '../../../modules/groupusers';
@@ -32,7 +33,6 @@ class DateSaturdayFulls extends Component {
 
     render() {
         return (
-
             <div className="content-wrapper">
                 <Spin spinning={this.state.isLoading} tip="Loading...">
                     <div className="page-header">
@@ -94,22 +94,9 @@ class DateSaturdayFulls extends Component {
                             </div>
                         </div>
                     </div>
+                    <ListDateSaturdayFull
 
-                    <div className="row ">
-                        <div className="col-12 grid-margin stretch-card">
-                            <div className="card">
-                                <div className="card-body">
-                                    <h4 className="card-title">List working whole saturday</h4>
-                                    <div className="forms-sample">
-                                        <div className="form-group">
-                                           
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                    />
                 </Spin>
             </div>
         );

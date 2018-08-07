@@ -12,6 +12,8 @@ import SentMail from '../admin/sent-mail/SentMail';
 
 import SaturdayFulls from '../admin/date-saturday-fulls/DateSaturdayFulls';
 import GroupUsers from '../admin/group_users/GroupUsers';
+import CalendarWork from '../admin/calendar-work/CalendarWork';
+
 
 
 import 'font-awesome/css/font-awesome.min.css';
@@ -30,6 +32,7 @@ class index extends Component {
                 <PrivateRoute exact path="/inbox.html" name="Upload File" component={Inbox} />
                 <PrivateRoute exact path="/upload-file.html" name="Upload File" component={UploadFile} />
                 <PrivateRoute exact path="/date-saturday-fulls.html" name="Date Saturday Fulls" component={SaturdayFulls} />
+                <PrivateRoute exact path="/calendar-work.html" name="Calendar Work" component={CalendarWork} />
                 <Route exact path="/" component={Home} />
                 <Redirect from="/" to="/" />
             </Switch>
