@@ -3,36 +3,15 @@ import { Calendar, Badge } from 'antd';
 import WithLayoutAdmin from '../../../components/Admin/WithLayout/WithLayoutAdmin';
 import moment from 'moment';
 import * as CONST from '../../../config/constant';
-import { Modal, TreeSelect } from 'antd';
+import { Modal, Select, TimePicker } from 'antd';
 
-const SHOW_PARENT = TreeSelect.SHOW_PARENT;
-const treeData = [{
-    title: 'Node1',
-    value: '0-0',
-    key: '0-0',
-    children: [{
-        title: 'Child Node1',
-        value: '0-0-0',
-        key: '0-0-0',
-    }],
-}, {
-    title: 'Node2',
-    value: '0-1',
-    key: '0-1',
-    children: [{
-        title: 'Child Node3',
-        value: '0-1-0',
-        key: '0-1-0',
-    }, {
-        title: 'Child Node4',
-        value: '0-1-1',
-        key: '0-1-1',
-    }, {
-        title: 'Child Node5',
-        value: '0-1-2',
-        key: '0-1-2',
-    }],
-}];
+const Option = Select.Option;
+const format = 'HH:mm';
+
+const children = [];
+for (let i = 10; i < 36; i++) {
+    children.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>);
+}
 
 class CalendarWork extends Component {
     constructor(props) {
@@ -58,6 +37,7 @@ class CalendarWork extends Component {
             ],
             visible: false,
             value: undefined,
+            error: {}
         }
     }
 
@@ -70,17 +50,7 @@ class CalendarWork extends Component {
     }
 
     render() {
-        const tProps = {
-            treeData,
-            value: this.state.value,
-            onChange: this.onChange,
-            treeCheckable: true,
-            showCheckedStrategy: SHOW_PARENT,
-            searchPlaceholder: 'Please select',
-            style: {
-                width: 300,
-            },
-        };
+        let error = this.state.error;
         return (
             <div className='content-wrapper'>
                 <div className='row'>
@@ -97,7 +67,7 @@ class CalendarWork extends Component {
                                         monthCellRender={this.monthCellRender}
                                         onPanelChange={this.onPanelChange}
                                         onSelect={this.onSelect}
-                                        onChange={this.onChange}
+                                        onChange={(date) => this.onChange('calendar', date)}
                                     />
                                 </div>
                                 <div>
@@ -108,8 +78,50 @@ class CalendarWork extends Component {
                                         onCancel={this.handleCancel}
                                     >
                                         <div className='forms-sample'>
+                                            <div className='form-group'>
+                                                <p className="card-description">
+                                                    Day : <code>Monday</code>
+                                                </p>
+                                            </div>
                                             <div className="form-group">
-                                                <TreeSelect {...tProps} />
+                                                <label >Group Users <span className='error-span'>*</span></label>
+                                                <Select
+                                                    mode="tags"
+                                                    size='large'
+                                                    placeholder="Group users"
+                                                    defaultValue={['a10', 'c12']}
+                                                    onChange={(value) => this.onChange('group_id', value)}
+                                                    style={{ width: '100%' }}
+                                                >
+                                                    {children}
+                                                </Select>
+                                                {error && error['groupUsersId'] ? <label className='error-label' >Sorry, please enter a valid group users ? <span className='error-span'>*</span></label> : ''}
+                                            </div>
+                                            <div className="form-group">
+                                                <div className='row'>
+                                                    <div className='col-md-6 form-group'>
+                                                        <label style={{ width: '100%' }} >Starts<span className='error-span'>*</span></label>
+                                                        <TimePicker style={{ width: '100%' }} defaultValue={moment('12:08', format)} format={format} size="large" />
+                                                        {error && error['groupUsersId'] ? <label className='error-label' >Sorry, please enter a valid group users ? <span className='error-span'>*</span></label> : ''}
+                                                    </div>
+                                                    <div className='col-md-6 form-group'>
+                                                        <label style={{ width: '100%' }} >Ends<span className='error-span'>*</span></label>
+                                                        <TimePicker style={{ width: '100%' }} defaultValue={moment('12:08', format)} format={format} size="large" />
+                                                        {error && error['groupUsersId'] ? <label className='error-label' >Sorry, please enter a valid group users ? <span className='error-span'>*</span></label> : ''}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="form-group">
+                                                <div className="form-check">
+                                                    <label className="form-check-label">
+                                                        <input type="radio" className="form-check-input" name="membershipRadios" id="membershipRadios1" value="" />Repeat month<i className="input-helper"></i>
+                                                    </label>
+                                                </div>
+                                                <div className="form-check">
+                                                    <label className="form-check-label">
+                                                        <input type="radio" className="form-check-input" name="membershipRadios" id="membershipRadios1" value="" />Repeat year<i className="input-helper"></i>
+                                                    </label>
+                                                </div>
                                             </div>
                                         </div>
                                     </Modal>
@@ -118,7 +130,7 @@ class CalendarWork extends Component {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div >
         );
     }
 
@@ -134,7 +146,12 @@ class CalendarWork extends Component {
         })
     }
 
-    onChange = (date) => {
+    onChange = (name, value) => {
+        switch (name) {
+            case 'calendar':
+                console.log(moment(value).format(CONST.DATE_FORMAT_FOR_API));
+                break
+        }
         this.setState({
             visible: true
         })
