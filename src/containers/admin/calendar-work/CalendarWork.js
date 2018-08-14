@@ -3,10 +3,11 @@ import { Calendar, Badge } from 'antd';
 import WithLayoutAdmin from '../../../components/Admin/WithLayout/WithLayoutAdmin';
 import moment from 'moment';
 import * as CONST from '../../../config/constant';
-import { Modal, Select, TimePicker } from 'antd';
+import { Modal, Select, TimePicker, message } from 'antd';
 import Session from '../../../utils/Session';
 import { getListGroupUsers } from '../../../modules/groupusers';
 import handleException from '../../../utils/handleException';
+import { createCalendarWork, getCalendarWork } from '../../../modules/calendarWork';
 
 const Option = Select.Option;
 const format = CONST.HHMM;
@@ -15,24 +16,7 @@ class CalendarWork extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: [
-                {
-                    'id': 1,
-                    'date': '2018-08-07',
-                    'group_users': [{
-                        "id": 15,
-                        "name": 'test',
-                    }]
-                },
-                {
-                    'id': 2,
-                    'date': '2018-08-01',
-                    'group_users': [{
-                        "id": 15,
-                        "name": 'test2',
-                    }]
-                }
-            ],
+            data: [],
             visible: false,
             value: undefined,
             error: {},
@@ -43,27 +27,20 @@ class CalendarWork extends Component {
             isLoading: true,
             dataGroupUsers: [],
             group_users: [],
-            ends: '17:00',
-            starts: '07:00'
-
+            end: '17:00',
+            start: '07:00',
+            date: moment().format(CONST.DATE_FORMAT_FOR_API_STRING),
+            error: {}
         }
     }
 
     componentWillMount() {
-        let start = moment('2018-08-01');
-        let end = moment('2018-08-20');
-        let day = 1;
-        let result = [];
-        let current = start.clone();
-        while (current.day(7 + day).isBefore(end)) {
-            result.push(current.clone());
-        }
 
-        console.log(result);
     }
 
     componentDidMount() {
         this.getApiGroupUser();
+        this.getPaiListCalendarWork(this.state.year.toString() + ((this.state.month + 1).toString().length < 2 ? '0' + (this.state.month+1).toString() : (this.state.month+1).toString()));
     }
 
     render() {
@@ -111,35 +88,37 @@ class CalendarWork extends Component {
                                                     style={{ width: '100%' }}
                                                     optionFilterProp="label"
                                                     value={this.state.group_users}
+                                                    onFocus={(value) => this.onFocus('group_users', value)}
+                                                    onBlur={(value) => this.onBlur('group_users', value)}
                                                 >
                                                     {this.renderGroupUser()}
                                                 </Select>
-                                                {error && error['groupUsersId'] ? <label className='error-label' >Sorry, please enter a valid group users ? <span className='error-span'>*</span></label> : ''}
+                                                {error && error['group_users'] ? <label className='error-label' >Sorry, please enter a valid group users ? <span className='error-span'>*</span></label> : ''}
                                             </div>
                                             <div className="form-group">
                                                 <div className='row'>
                                                     <div className='col-md-6 form-group'>
-                                                        <label style={{ width: '100%' }} >Starts<span className='error-span'>*</span></label>
+                                                        <label style={{ width: '100%' }} >start<span className='error-span'>*</span></label>
                                                         <TimePicker
                                                             style={{ width: '100%' }}
-                                                            value={moment(this.state.starts, format)}
+                                                            value={this.state.start ? moment(this.state.start, format) : undefined}
                                                             format={format}
                                                             size="large"
-                                                            onChange={(time, timeString) => this.onChangeStartsEnds('starts', timeString)}
+                                                            onChange={(time, timeString) => this.onChangeStartEnd('start', timeString)}
                                                         />
 
-                                                        {error && error['groupUsersId'] ? <label className='error-label' >Sorry, please enter a valid group users ? <span className='error-span'>*</span></label> : ''}
+                                                        {error && error['start'] ? <label className='error-label' >Sorry, please enter a valid start ? <span className='error-span'>*</span></label> : ''}
                                                     </div>
                                                     <div className='col-md-6 form-group'>
-                                                        <label style={{ width: '100%' }} >Ends<span className='error-span'>*</span></label>
+                                                        <label style={{ width: '100%' }} >end<span className='error-span'>*</span></label>
                                                         <TimePicker
                                                             style={{ width: '100%' }}
+                                                            value={this.state.end ? moment(this.state.end, format) : undefined}
                                                             format={format}
                                                             size="large"
-                                                            onChange={(time, timeString) => this.onChangeStartsEnds('ends', time, timeString)}
-                                                            value={moment(this.state.ends, format)}
+                                                            onChange={(time, timeString) => this.onChangeStartEnd('end', timeString)}
                                                         />
-                                                        {error && error['groupUsersId'] ? <label className='error-label' >Sorry, please enter a valid group users ? <span className='error-span'>*</span></label> : ''}
+                                                        {error && error['end'] ? <label className='error-label' >Sorry, please enter a valid end ? <span className='error-span'>*</span></label> : ''}
                                                     </div>
                                                 </div>
                                             </div>
@@ -171,9 +150,49 @@ class CalendarWork extends Component {
         );
     }
 
-    onChangeStartsEnds = (name, timeString) => {
+    onFocus = (name, value) => {
+        let error = this.state.error;
+        delete error[name];
         this.setState({
-            [name]: timeString
+            error: error
+        })
+    }
+
+    onBlur = (name, value) => {
+        let error = this.state.error;
+        switch (name) {
+            case 'group_users':
+                if (value.length <= 0 || !value) {
+                    error[name] = 'error'
+                }
+                break;
+            case 'start':
+            case 'end':
+                if (!value) {
+                    error[name] = 'error'
+                }
+                break;
+            default:
+                break;
+        }
+
+        this.setState({
+            error: error
+        })
+    }
+
+    onChangeStartEnd = (name, timeString) => {
+        let error = this.state.error;
+        if (!timeString) {
+            error[name] = 'error'
+        }
+        else {
+            delete error[name];
+        }
+
+        this.setState({
+            [name]: timeString,
+            error: error
         })
     }
 
@@ -189,11 +208,83 @@ class CalendarWork extends Component {
         })
     }
 
-    handleOk = () => {
-        this.setState({
-            visible: false
-        })
+    getDateFullYear = () => {
+        let start = moment(this.state.year + '-01-01');
+        let end = moment(this.state.year + '-12-31');
+        let dayStart = moment(moment(start).format(CONST.DATE_FORMAT_FOR_API)).day();
+        let dayEnd = moment(moment(end).format(CONST.DATE_FORMAT_FOR_API)).day();
+        let day = 1;
+        let result = [];
+        let current = start.clone();
+        if (dayStart === 1) {
+            result.push(moment(start).format(CONST.DATE_FORMAT_FOR_API_STRING))
+        }
+        while (current.day(7 + day).isBefore(end)) {
+            result.push(moment(current.clone()).format(CONST.DATE_FORMAT_FOR_API_STRING));
+        }
+        if (dayEnd === 1) {
+            result.push(moment(end).format(CONST.DATE_FORMAT_FOR_API_STRING))
+        }
+
+        return result;
     }
+
+    handleOk = () => {
+        if (!this.isValid()) return;
+        let data = [];
+        let group_users = this.state.group_users;
+
+        if (!this.state.repeat_year) {
+            data.push({
+                day: this.state.day,
+                date: this.state.date,
+                start: this.state.start,
+                end: this.state.end
+            })
+        }
+        else {
+            let listDateFullYear = this.getDateFullYear();
+            for (let i = 0; i < listDateFullYear.length; i++) {
+                data.push({
+                    day: this.state.day,
+                    date: listDateFullYear[i],
+                    start: this.state.start,
+                    end: this.state.end
+                })
+            }
+        }
+
+        let access_token = Session.get().token.access_token;
+        let inputs = {
+            data: data,
+            group_users: group_users,
+            access_token: access_token
+        }
+        createCalendarWork(inputs).then(res => {
+            let data = res.data;
+            if (data.state === 1) {
+                this.error();
+            } else {
+                this.success();
+                this.setState({
+                    visible: false
+                })
+            }
+
+        }).catch(e => {
+            handleException(e).next();
+        })
+
+
+    }
+
+    success = () => {
+        message.success('Create calendar work success');
+    };
+
+    error = () => {
+        message.error('Create calendar work error');
+    };
 
     handleCancel = () => {
         this.setState({
@@ -205,7 +296,8 @@ class CalendarWork extends Component {
         let day = moment(moment(value).format(CONST.DATE_FORMAT_FOR_API)).day();
         this.setState({
             visible: true,
-            day: day
+            day: day,
+            date: moment(value).format(CONST.DATE_FORMAT_FOR_API_STRING)
         })
     }
 
@@ -220,15 +312,16 @@ class CalendarWork extends Component {
         let day = moment(moment(date).format(CONST.DATE_FORMAT_FOR_API)).day();
         this.setState({
             visible: true,
-            day: day
+            day: day,
+            date: moment(date).format(CONST.DATE_FORMAT_FOR_API_STRING)
         })
     }
 
-    getListData = (value) => {
+    getListDate = (value) => {
         let listData;
         let data = this.state.data;
         for (let i = 0; i < data.length; i++) {
-            if (data[i].date === moment(value).format(CONST.DATE_FORMAT_FOR_API)) {
+            if (data[i].date === moment(value).format(CONST.DATE_FORMAT_FOR_API_STRING)) {
                 listData = [
                     { type: 'warning', content: 'This is warning event.' },
                 ]; continue;
@@ -240,7 +333,7 @@ class CalendarWork extends Component {
     }
 
     dateCellRender = (value) => {
-        const listData = this.getListData(value);
+        const listData = this.getListDate(value);
         return (
             <ul className="events">
                 {
@@ -274,7 +367,7 @@ class CalendarWork extends Component {
         let children = [];
         let data = this.state.dataGroupUsers;
         for (let i = 0; i < data.length; i++) {
-            children.push(<Option key={i} label={data[i].name}>{data[i].name}</Option>);
+            children.push(<Option key={i} label={data[i].name} value={data[i].id}>{data[i].name}</Option>);
         }
 
         return children;
@@ -294,6 +387,48 @@ class CalendarWork extends Component {
         }).catch(e => {
             handleException(e).next();
         })
+    }
+
+    getPaiListCalendarWork = (date) => {
+        let access_token = Session.get().token.access_token;
+        let data = {
+            access_token: access_token,
+            date: date
+        }
+        getCalendarWork(data).then(res => {
+            if (res.data.status === 0) {
+                this.setState({
+                    data: res.data.data
+                })
+            }
+        }).catch(e => {
+            handleException(e).next();
+        })
+    }
+
+    isValid = () => {
+        let error = this.state.error;
+        let status = true;
+        if (this.state.group_users.length <= 0) {
+            error['group_users'] = 'error';
+            status = false;
+        }
+
+        if (!this.state.start) {
+            error['start'] = 'error';
+            status = false;
+        }
+
+        if (!this.state.end) {
+            error['end'] = 'error';
+            status = false;
+        }
+
+        this.setState({
+            error: error
+        })
+
+        return status
     }
 }
 

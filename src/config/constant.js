@@ -1,5 +1,6 @@
 export const DATE_FORMAT_FOR_DISPLAY = "MM-DD-YYYY"
 export const DATE_FORMAT_FOR_API = "YYYY-MM-DD"
+export const DATE_FORMAT_FOR_API_STRING = "YYYYMMDD"
 export const DATE_FORMAT_FOR_API_DATETIME = "MM-DD-YYYY HH:mm:ss"
 export const DATE_FORMAT_FOR_DISPLAY_DATETIME = "MM-DD-YYYY HH:mm:ss"
 export const HHMM = 'HH:mm'
