@@ -12,7 +12,7 @@ import SentMail from '../admin/sent-mail/SentMail';
 
 import SaturdayFulls from '../admin/date-saturday-fulls/DateSaturdayFulls';
 import GroupUsers from '../admin/group_users/GroupUsers';
-import CalendarWork from '../admin/calendar-work/CalendarWork';
+import CalendarWork from '../admin/calendar/Calendar';
 
 
 

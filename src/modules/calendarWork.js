@@ -11,7 +11,10 @@ export function createCalendarWork(data) {
         },
         data: {
             inputs: data.data,
-            group_users: data.group_users
+            group_users: data.group_users,
+            date: data.date,
+            start: data.start,
+            end: data.end
         }
     })
 }
