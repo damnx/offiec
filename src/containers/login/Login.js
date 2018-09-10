@@ -149,7 +149,6 @@ class Login extends Component {
     saveForm = () => {
         let isValid = this.isValid();
         let error = this.state.error;
-
         if (isValid) {
             this.setState({
                 isSubmit: true

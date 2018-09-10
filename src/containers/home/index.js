@@ -13,7 +13,7 @@ class index extends Component {
                 </ol>
                 <div className="carousel-inner">
                     <div className="carousel-item active">
-                    <img className="d-block w-100" src="http://diamondcreative.net/plus-v1.1/img/slider/slider_03.jpg" alt="First slide" />
+                    <img className="d-block w-100" src="https://cdn.trangcongnghe.com/uploads/posts/2016-12/huong-dan-meo-chup-va-chinh-sua-anh-dep-tren-smartphone_1.jpeg" alt="First slide" />
                         <div className="carousel-caption d-none d-md-block">
                             <h3>New Collection touch of Chania</h3>
                             <p>The atmosphere in Chania has a touch<br /> of Florence and Venice.</p>
@@ -21,7 +21,7 @@ class index extends Component {
                         </div>
                     </div>
                     <div className="carousel-item">
-                        <img className="d-block w-100" src="http://diamondcreative.net/plus-v1.1/img/slider/slider_03.jpg" alt="First slide" />
+                        <img className="d-block w-100" src="https://cdn.trangcongnghe.com/uploads/posts/2016-12/huong-dan-meo-chup-va-chinh-sua-anh-dep-tren-smartphone_1.jpeg" alt="First slide" />
                         <div className="carousel-caption d-none d-md-block">
                             <h3>New Collection touch of Chania</h3>
                             <p>The atmosphere in Chania has a touch<br /> of Florence and Venice.</p>

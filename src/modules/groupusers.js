@@ -16,7 +16,7 @@ export function createGroupUsers(data) {
 export function getListGroupUsersPaginate(data) {
     return axios({
         method: 'get',
-        url: Config.oauth_base_url + "/api/get-all-group-users-paginate?page_size=" + data.page_size + "&page=" + data.page,
+        url: Config.oauth_base_url + "/api/get-list-group-users?page_size=" + data.page_size + "&page=" + data.page,
         headers: {
             'Accept': 'application/json',
             "Authorization": "Bearer " + data.access_token

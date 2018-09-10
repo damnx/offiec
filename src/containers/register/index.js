@@ -27,7 +27,7 @@ class index extends Component {
 
     componentWillMount = () => {
         let session = Session.get();
-        if (session){
+        if (session) {
             history.push('/')
         }
     }
@@ -271,20 +271,22 @@ class index extends Component {
                     history.push('/login.html');
                     this.success();
                 }
-                else {
-                    let dataError = res.data.error;
+            }).catch(e => {
+                if (e.response.status === 422) {
+                    let dataError = e.response.data.errors;
                     this.error();
                     for (let i in dataError) {
                         error[i] = dataError[i][0];
                     }
                     this.setState({
-                        error: error
+                        error: error,
+                        isSubmit: false
                     })
+                } else {
+                    handleException(e).next()
                 }
             })
-                .catch(e => {
-                    handleException(e).next()
-                })
+
         }
     }
 

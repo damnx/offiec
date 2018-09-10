@@ -8,41 +8,37 @@ import { message } from 'antd';
 
 class ListGroupUser extends Component {
 
-    
+
 
     render() {
         return (
-            <div className='col-12 grid-margin'>
-                <div className='card'>
-                    <div className="card-body">
-                        <h4 className="card-title">List Group Users</h4>
-                        <div className='form-group'>
-                            <table className="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Name Group</th>
-                                        <th>Number of Member</th>
-                                        <th>Status</th>
-                                        <th className='text-right'>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {this.renderGroupUser()}
-                                </tbody>
-                            </table>
-                        </div>
-                        <div className='form-group text-right'>
-                            {this.props.total > CONST.PAGE_SIZE && <Pagination
-                                size="small"
-                                pageSize={CONST.PAGE_SIZE}
-                                onChange={this.onChangePaginate}
-                                total={this.props.total}
-                                current={this.props.current_page}
-                                showQuickJumper
-                                defaultPageSize={this.props.page}
-                            />}
-                        </div>
-                    </div>
+            <div>
+                <div className='form-group'>
+                    <table className="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Name Group</th>
+                                <th>Number of Member</th>
+                                <th>Status</th>
+                                <th className='text-right'>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {this.renderGroupUser()}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div className='form-group text-right'>
+                    {this.props.total > CONST.PAGE_SIZE && <Pagination
+                        size="small"
+                        pageSize={CONST.PAGE_SIZE}
+                        // onChange={this.onChangePaginate}
+                        total={this.props.total}
+                        current={this.props.currentPage}
+                        showQuickJumper
+                        defaultPageSize={this.props.page}
+                    />}
                 </div>
             </div>
         );
@@ -60,7 +56,7 @@ class ListGroupUser extends Component {
                     <button
                         href="#Edit-Group-User"
                         className="btn btn-gradient-primary btn-icon-text btn-sm mr-2"
-                        onClick={() => this.onClickUpdate(i)}
+
                         type="submit"
                     >
                         Edit
@@ -69,7 +65,7 @@ class ListGroupUser extends Component {
 
                     <button
                         className="btn btn-gradient-danger btn-lg btn-sm"
-                        onClick={() => this.onClickDelete(i)}
+
                         type="submit"
                         disabled={this.props.isLoading ? this.props.isLoading : false}
                     >
@@ -82,47 +78,6 @@ class ListGroupUser extends Component {
         return result;
     }
 
-    onClickDelete = (isKey) => {
-        this.apiDestroyGroupUsers(isKey);
-    }
-
-    apiDestroyGroupUsers = (isKey) => {
-        let data = this.props.dataGroupUsers;
-        let id = data[isKey].id;
-        let access_token = Session.get().token.access_token;
-        let dataNew = {
-            access_token: access_token,
-            id: id,
-        }
-        destroyGroupUsers(dataNew).then(res => {
-            if (res.data.status === 0) {
-                this.success();
-                this.props.onClickDelete(isKey);
-            } else {
-                this.error();
-                this.props.onClickDelete(null);
-            }
-        }).catch(e => {
-            handleException(e).next();
-        })
-    }
-
-    success = () => {
-        message.success('Delete Group User Success');
-    };
-
-    error = () => {
-        message.error('Delete Group User Error');
-    };
-
-
-    onChangePaginate = (page, pageSize) => {
-        this.props.onChange(page, pageSize)
-    }
-
-    onClickUpdate = (isKey) => {
-        this.props.onClickUpdate(isKey)
-    }
 }
 
 export default ListGroupUser;
