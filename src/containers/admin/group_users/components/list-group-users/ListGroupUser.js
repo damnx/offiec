@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import * as CONST from '../../../../../config/constant';
 import { Pagination } from 'antd';
-import { destroyGroupUsers } from '../../../../../modules/groupusers';
-import Session from '../../../../../utils/Session';
-import handleException from '../../../../../utils/handleException';
-import { message } from 'antd';
+import DeleteGroupUsere from '../delete-group-users/DeleteGroupUsere';
+import UpdateGroupUsers from '../update-group-users/UpdateGroupUsers';
 
 class ListGroupUser extends Component {
+    constructor(props) {
+        super(props);
 
-
+    }
 
     render() {
         return (
@@ -53,29 +53,29 @@ class ListGroupUser extends Component {
                 <td className="text-danger"> {data[i].user_count} <i className="mdi mdi-account-check"></i></td>
                 <td><label className={CONST.ENUM_GROUP_USERS_STATUS[data[i].status].className + ' badge'}>{CONST.ENUM_GROUP_USERS_STATUS[data[i].status].value}</label></td>
                 <td className='text-right'>
-                    <button
-                        href="#Edit-Group-User"
-                        className="btn btn-gradient-primary btn-icon-text btn-sm mr-2"
+                    <UpdateGroupUsers
+                        data={data[i]}
+                        onClick={this.onClickUpdate}
+                    />
+                    <DeleteGroupUsere
+                        id={data[i].id}
+                        cellApiGetListGroupUsers={this.cellApiGetListGroupUsers}
+                        page={this.props.page}
+                        isLoading={this.props.isLoading}
+                    />
 
-                        type="submit"
-                    >
-                        Edit
-                          <i className="mdi mdi-file-check btn-icon-append"></i>
-                    </button>
-
-                    <button
-                        className="btn btn-gradient-danger btn-lg btn-sm"
-
-                        type="submit"
-                        disabled={this.props.isLoading ? this.props.isLoading : false}
-                    >
-                        Delete
-                        <i className="mdi mdi-delete-forever"></i>
-                    </button>
                 </td>
             </tr >)
         }
         return result;
+    }
+
+    cellApiGetListGroupUsers = (page) => {
+        this.props.cellApiGetListGroupUsers(page)
+    }
+
+    onClickUpdate = (data) => {
+        this.props.onClickUpdate(data);
     }
 
 }

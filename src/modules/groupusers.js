@@ -9,14 +9,14 @@ export function createGroupUsers(data) {
             'Accept': 'application/json',
             "Authorization": "Bearer " + data.access_token
         },
-        data: data.data
+        data: data.inputs
     })
 }
 
 export function getListGroupUsersPaginate(data) {
     return axios({
         method: 'get',
-        url: Config.oauth_base_url + "/api/get-list-group-users?page_size=" + data.page_size + "&page=" + data.page,
+        url: Config.oauth_base_url + "/api/get-list-group-users?pageSize=" + data.pageSize + "&page=" + data.page,
         headers: {
             'Accept': 'application/json',
             "Authorization": "Bearer " + data.access_token
@@ -43,7 +43,7 @@ export function editGroupUsers(data) {
             'Accept': 'application/json',
             "Authorization": "Bearer " + data.access_token
         },
-        data: data.data
+        data: data.inputs
     })
 }
 
