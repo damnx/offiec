@@ -13,7 +13,7 @@ class ListGroupUser extends Component {
     render() {
         return (
             <div>
-                <div className='form-group'>
+                <div className='form-group' style={{ overflow: 'auto' }}>
                     <table className="table table-hover">
                         <thead>
                             <tr>

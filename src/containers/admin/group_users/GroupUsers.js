@@ -10,6 +10,7 @@ import AddGroupUsers from './components/add-group-users/AddGroupUsers';
 import CreateOrPpdateGroupUsers from './components/create-or-update-group-users/CreateOrPpdateGroupUsers';
 import Breadcrumb from '../../../components/Admin/Breadcrumb';
 import { getListGroupUsersPaginate } from '../../../modules/groupusers';
+import SearchGroupUsers from './components/search-group-users/SearchGroupUsers';
 
 
 class GroupUsers extends Component {
@@ -26,6 +27,10 @@ class GroupUsers extends Component {
                 name: undefined,
                 status: undefined,
                 description: ''
+            },
+            search: {
+                name: undefined,
+                status: undefined
             },
             id: undefined
         }
@@ -48,13 +53,13 @@ class GroupUsers extends Component {
                             <div className='card'>
                                 <div className="card-body">
                                     <div className='row'>
-                                        <div className='col-lg-6'>
-                                            <h4 className="card-title">List Group Users</h4>
-                                        </div>
                                         <AddGroupUsers
                                             showDrawer={this.showDrawer}
                                         />
                                     </div>
+                                    <SearchGroupUsers
+
+                                    />
                                     <ListGroupUser
                                         dataGroupUsers={this.state.dataGroupUsers}
                                         total={this.state.total}
@@ -124,8 +129,10 @@ class GroupUsers extends Component {
         let access_token = Session.get().token.access_token;
         let data = {
             access_token: access_token,
-            page: page,
-            pageSize: CONST.PAGE_SIZE
+            inputs: {
+                page: page,
+                pageSize: CONST.PAGE_SIZE
+            }
         }
         this.setState({
             isLoading: true

@@ -1,5 +1,6 @@
 import axios from 'axios'
 import Config from '../utils/Config'
+import { encodeData } from '../utils/index';
 
 export function createGroupUsers(data) {
     return axios({
@@ -14,9 +15,10 @@ export function createGroupUsers(data) {
 }
 
 export function getListGroupUsersPaginate(data) {
+
     return axios({
         method: 'get',
-        url: Config.oauth_base_url + "/api/get-list-group-users?pageSize=" + data.pageSize + "&page=" + data.page,
+        url: Config.oauth_base_url + "/api/get-list-group-users?" + encodeData(data.inputs),
         headers: {
             'Accept': 'application/json',
             "Authorization": "Bearer " + data.access_token

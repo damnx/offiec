@@ -12,7 +12,7 @@ class AddGroupUsers extends Component {
 
     render() {
         return (
-            <div className='col-lg-6 text-right'>
+            <div className='col-lg-12 text-right'>
                 <button
                     type="button"
                     className="btn btn-gradient-primary btn-fw"

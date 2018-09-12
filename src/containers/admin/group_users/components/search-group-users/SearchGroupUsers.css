@@ -1,0 +1,9 @@
+.btn-gradient-success-search-groupUsers {
+    min-width: 2.5px 0px;
+}
+
+@media screen and (max-width: 394px) {
+    .mr-2{
+        margin: 2.5px
+    }
+  }
