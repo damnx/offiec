@@ -32,16 +32,20 @@ class ListGroupUser extends Component {
                 <div className='form-group text-right'>
                     {this.props.total > CONST.PAGE_SIZE && <Pagination
                         size="small"
-                        pageSize={CONST.PAGE_SIZE}
-                        // onChange={this.onChangePaginate}
+                        pageSize={this.props.pageSize}
                         total={this.props.total}
-                        current={this.props.currentPage}
+                        current={this.props.page}
                         showQuickJumper
                         defaultPageSize={this.props.page}
+                        onChange={this.onChange}
                     />}
                 </div>
             </div>
         );
+    }
+
+    rendernotFound = () => {
+
     }
 
     renderGroupUser = () => {
@@ -78,6 +82,9 @@ class ListGroupUser extends Component {
         this.props.onClickUpdate(data);
     }
 
+    onChange = (page, pageSize) => {
+        this.props.onChangePaginate(page, pageSize)
+    }
 }
 
 export default ListGroupUser;

@@ -11,16 +11,17 @@ import CreateOrPpdateGroupUsers from './components/create-or-update-group-users/
 import Breadcrumb from '../../../components/Admin/Breadcrumb';
 import { getListGroupUsersPaginate } from '../../../modules/groupusers';
 import SearchGroupUsers from './components/search-group-users/SearchGroupUsers';
-
+import { decodeUrl, encodeData } from '../../../utils';
+import history from '../../../utils/history';
 
 class GroupUsers extends Component {
     constructor(props) {
         super(props)
+        let search = decodeUrl(props.location.search.substring(1));
         this.state = {
             dataGroupUsers: {},
-            page: 1,
+            page: search && search['page'] ? Number(search['page']) : 1,
             total: 0,
-            currentPage: 0,
             isLoading: false,
             visible: false,
             inputs: {
@@ -29,18 +30,37 @@ class GroupUsers extends Component {
                 description: ''
             },
             search: {
-                name: undefined,
-                status: undefined
+                name: search && search['name'] ? search['name'] : undefined,
+                status: search && search['status'] ? search['status'] : undefined
             },
-            id: undefined
+            id: undefined,
+            pageSize: search && search['pageSize'] ? Number(search['pageSize']) : CONST.PAGE_SIZE,
         }
     }
 
     componentDidMount() {
+        window.onpopstate = this.onBackButtonEvent;
         this.cellApiGetListGroupUsers(this.state.page);
     }
 
+    onBackButtonEvent = () => {
+        let search = decodeUrl(this.props.location.search.substring(1));
+        this.setState({
+            ...this.state,
+            search: {
+                name: search && search['name'] ? search['name'] : undefined,
+                status: search && search['status'] ? search['status'] : undefined
+            },
+            pageSize: search && search['pageSize'] ? Number(search['pageSize']) : CONST.PAGE_SIZE,
+            page: search && search['page'] ? Number(search['page']) : 1
+
+        }, () => {
+            this.cellApiGetListGroupUsers(this.state.page);
+        })
+    }
+
     render() {
+        console.log(this.state.page);
         return (
             <div className="content-wrapper">
                 <Spin tip="Loading..." spinning={this.state.isLoading}>
@@ -58,18 +78,23 @@ class GroupUsers extends Component {
                                         />
                                     </div>
                                     <SearchGroupUsers
-
+                                        search={this.state.search}
+                                        onChangeSearchGroupUsers={this.onChangeSearchGroupUsers}
+                                        cellApiGetListGroupUsers={this.cellApiGetListGroupUsers}
+                                        page={this.state.page}
+                                        pageSize={this.state.pageSize}
                                     />
-                                    <ListGroupUser
+                                    {/* <ListGroupUser
                                         dataGroupUsers={this.state.dataGroupUsers}
                                         total={this.state.total}
-                                        currentPage={this.state.currentPage}
-                                        onChange={this.onChangePaginate}
+                                        page={this.state.page}
+                                        onChangePaginate={this.onChangePaginate}
                                         isLoading={this.state.isLoading}
                                         page={this.state.page}
                                         cellApiGetListGroupUsers={this.cellApiGetListGroupUsers}
                                         onClickUpdate={this.onClickUpdate}
-                                    />
+                                        pageSize={this.state.pageSize}
+                                    /> */}
                                 </div>
                             </div>
                         </div>
@@ -86,6 +111,12 @@ class GroupUsers extends Component {
                 </Spin>
             </div>
         );
+    }
+
+    onChangeSearchGroupUsers = (name, value) => {
+        this.setState({
+            [name]: value
+        })
     }
 
     onClickUpdate = (data) => {
@@ -125,26 +156,51 @@ class GroupUsers extends Component {
         })
     }
 
+    onChangePaginate = (page, pageSize) => {
+        this.setState({
+            page: page,
+            pageSize: pageSize
+        }, () => {
+            let inputs = {
+                page: this.state.page,
+                pageSize: this.state.pageSize,
+                name: this.state.search['name'],
+                status: this.state.search['status']
+            };
+            history.push({
+                pathname: '/group-users.html',
+                search: encodeData(inputs)
+            })
+            this.cellApiGetListGroupUsers(page);
+        })
+    }
+
     cellApiGetListGroupUsers = (page) => {
         let access_token = Session.get().token.access_token;
         let data = {
             access_token: access_token,
             inputs: {
                 page: page,
-                pageSize: CONST.PAGE_SIZE
+                pageSize: this.state.pageSize,
+                name: this.state.search['name'],
+                status: this.state.search['status'],
             }
         }
         this.setState({
             isLoading: true
-        })
-        getListGroupUsersPaginate(data).then(res => {
-            this.setState({
-                isLoading: false,
-                dataGroupUsers: res.data.data.data,
-
-            });
-        }).catch(e => {
-            handleException(e).next();
+        },()=>{
+            getListGroupUsersPaginate(data).then(res => {
+                let data = res.data.data
+                this.setState({
+                    isLoading: false,
+                    dataGroupUsers: data.data,
+                    total: data.total,
+                    pageSize: Number(data.per_page),
+                    page: data.current_page
+                });
+            }).catch(e => {
+                handleException(e).next();
+            })
         })
     }
 }
