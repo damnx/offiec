@@ -60,7 +60,6 @@ class GroupUsers extends Component {
     }
 
     render() {
-        console.log(this.state.page);
         return (
             <div className="content-wrapper">
                 <Spin tip="Loading..." spinning={this.state.isLoading}>
@@ -83,8 +82,10 @@ class GroupUsers extends Component {
                                         cellApiGetListGroupUsers={this.cellApiGetListGroupUsers}
                                         page={this.state.page}
                                         pageSize={this.state.pageSize}
+                                        onClickCancel={this.onClickCancel}
+
                                     />
-                                    {/* <ListGroupUser
+                                    <ListGroupUser
                                         dataGroupUsers={this.state.dataGroupUsers}
                                         total={this.state.total}
                                         page={this.state.page}
@@ -94,7 +95,7 @@ class GroupUsers extends Component {
                                         cellApiGetListGroupUsers={this.cellApiGetListGroupUsers}
                                         onClickUpdate={this.onClickUpdate}
                                         pageSize={this.state.pageSize}
-                                    /> */}
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -116,6 +117,20 @@ class GroupUsers extends Component {
     onChangeSearchGroupUsers = (name, value) => {
         this.setState({
             [name]: value
+        })
+    }
+
+    onClickCancel = () => {
+        this.setState({
+            ...this.state,
+            search: {
+                name: undefined,
+                status: undefined
+            },
+            page: 1
+        }, () => {
+            this.pushUrl()
+            this.cellApiGetListGroupUsers(this.state.page);
         })
     }
 
@@ -161,17 +176,22 @@ class GroupUsers extends Component {
             page: page,
             pageSize: pageSize
         }, () => {
-            let inputs = {
-                page: this.state.page,
-                pageSize: this.state.pageSize,
-                name: this.state.search['name'],
-                status: this.state.search['status']
-            };
-            history.push({
-                pathname: '/group-users.html',
-                search: encodeData(inputs)
-            })
+            this.pushUrl()
             this.cellApiGetListGroupUsers(page);
+        })
+    }
+
+    pushUrl = () => {
+        let inputs = {
+            name: this.state.search['name'],
+            status: this.state.search['status'],
+            page: this.state.page,
+            pageSize: this.state.pageSize,
+
+        };
+        history.push({
+            pathname: '/group-users.html',
+            search: encodeData(inputs)
         })
     }
 
@@ -180,15 +200,15 @@ class GroupUsers extends Component {
         let data = {
             access_token: access_token,
             inputs: {
-                page: page,
-                pageSize: this.state.pageSize,
                 name: this.state.search['name'],
                 status: this.state.search['status'],
+                page: page,
+                pageSize: this.state.pageSize
             }
         }
         this.setState({
             isLoading: true
-        },()=>{
+        }, () => {
             getListGroupUsersPaginate(data).then(res => {
                 let data = res.data.data
                 this.setState({

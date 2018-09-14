@@ -62,6 +62,14 @@ class SearchGroupUsers extends Component {
                                 >
                                     Search
                                 </button>
+
+                                <button
+                                    type="button"
+                                    className="btn btn-gradient-danger btn-gradient-success-search-groupUsers btn-fw"
+                                    onClick={this.onClickCancel}
+                                >
+                                    Cancel
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -79,18 +87,22 @@ class SearchGroupUsers extends Component {
 
     onClick = () => {
         let inputs = {
-            page: this.props.page,
-            pageSize: this.props.pageSize,
             name: this.props.search['name'],
-            status: this.props.search['status']
+            status: this.props.search['status'],
+            page: 1,
+            pageSize: this.props.pageSize,
         };
+        if (this.props.search['name'] || this.props.search['status']) {
+            history.push({
+                pathname: '/group-users.html',
+                search: encodeData(inputs)
+            })
+        }
+        this.props.cellApiGetListGroupUsers(1);
+    }
 
-        history.push({
-            pathname: '/group-users.html',
-            search: encodeData(inputs)
-        })
-
-        this.props.cellApiGetListGroupUsers(this.props.page);
+    onClickCancel = () => {
+        this.props.onClickCancel();
     }
 }
 

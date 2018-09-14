@@ -13,6 +13,7 @@ import SentMail from '../admin/sent-mail/SentMail';
 import SaturdayFulls from '../admin/date-saturday-fulls/DateSaturdayFulls';
 import GroupUsers from '../admin/group_users/GroupUsers';
 import CalendarWork from '../admin/calendar/Calendar';
+import Task from '../task/Task';
 
 
 
@@ -24,9 +25,12 @@ class index extends Component {
         return (
             <Switch>
                 {/* <PrivateRoute exact path="/test" name="Home" component={Home} /> */}
+
                 <Route exact path="/login.html" name="Login" component={Login} />
-                <PrivateRoute exact path="/admin.html" name="Home Admin" component={HomeAdmin} />
                 <Route exact path="/register.html" name="Upload File" component={Register} />
+                <Route exact path="/task-time.html" name="Task Time" component={Task} />
+
+                <PrivateRoute exact path="/admin.html" name="Home Admin" component={HomeAdmin} />
                 <PrivateRoute exact path="/group-users.html" name="Group Users" component={GroupUsers} />
                 <PrivateRoute exact path="/sent-mail.html" name="Sent Mail" component={SentMail} />
                 <PrivateRoute exact path="/inbox.html" name="Upload File" component={Inbox} />

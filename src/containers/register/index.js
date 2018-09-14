@@ -39,7 +39,7 @@ class index extends Component {
 
     render() {
         return (
-            <div className='register-damnx'>
+            <div id="register-damnx" className="Login-register-damnx register-damnx">
                 <h1 className="header-w3ls">Signup Form</h1>
                 <div className="signup-w3ls">
                     <div className="signup-agile1">

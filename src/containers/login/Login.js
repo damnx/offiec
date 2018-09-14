@@ -37,7 +37,7 @@ class Login extends Component {
 
     rednerLogin = () => {
         return (
-            <div>
+            <div className='Login-register-damnx'>
                 <h1 className="header-w3ls">Login Form</h1>
                 <div className="signup-w3ls signup-w3ls-login">
                     <div className="signup-agile1">
